@@ -1,4 +1,8 @@
 // Reducers index.js
+
+/*dependencies*/
+import { LOADING, FETCH_LIST_SUCCESS, FAILED_TO_FETCH } from "../actions";
+
 const initialState = {
   tasks: [
     {
@@ -15,11 +19,34 @@ const initialState = {
       datemade: "",
       recurring: false
     }
-  ]
+  ],
+  isLoading: false,
+  error: ""
 };
 
 export const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        default: return state;
-    }
-}
+  switch (action.type) {
+    case LOADING:
+      return {
+        ...state,
+        isLoading: true,
+        error: ""
+      };
+    case FETCH_LIST_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: "",
+        tasks: action.payload
+      };
+    case FAILED_TO_FETCH:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+
+    default:
+      return state;
+  }
+};
