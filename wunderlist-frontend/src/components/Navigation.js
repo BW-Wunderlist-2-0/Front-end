@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 
 
-const Header = () => {
+const Navigation = () => {
 
   return (
     <div style={{ width: '30%', display: 'flex', justifyContent: 'space-between' }}>
@@ -17,4 +17,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navigation;

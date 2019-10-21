@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
+import Navigation from './components/Navigation';
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
     <Router>
       <div className="App">
         <h1>Wunderlist 2.0</h1>
+        <Navigation />
       </div>
     </Router>
   );
