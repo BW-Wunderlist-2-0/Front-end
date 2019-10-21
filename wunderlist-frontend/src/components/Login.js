@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Form, Icon, Input, Button } from 'antd';
+import React from 'react';
+import { Form, Icon, Input, Button } from 'antd';
 
-
-const initialLoginState = {
-  username: '',
-  password: ''
-}
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -29,7 +24,7 @@ const Login = props => {
 
   // colors subject to change as styling improves.
   return (
-    <Modal>
+    <>
       <h1> Login Component</h1>
       <Form layout="inline" onSubmit={handleSubmit}>
         <Form.Item validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
@@ -59,7 +54,7 @@ const Login = props => {
           </Button>
         </Form.Item>
       </Form>
-    </Modal>
+    </>
   )
 }
 
