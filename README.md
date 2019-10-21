@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 
 >>>>>>> e136403fde9627f1d5a656f124079e60bcd73f8b
 ## About Wunderlist 2.0
