@@ -12,6 +12,7 @@ function App() {
       <div className="App">
         <h1>Wunderlist 2.0</h1>
         <Navigation />
+        <Route to='/login' component={Login} />
       </div>
     </Router>
   );
