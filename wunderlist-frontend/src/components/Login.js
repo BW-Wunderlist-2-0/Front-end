@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Icon, Input, Button } from 'antd';
 
+import axiosWithAuth from '../utilities/axiosWithAuth';
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -8,7 +9,7 @@ function hasErrors(fieldsError) {
 
 const Login = props => {
   const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form
-
+  // console.log(`props.form`, getFieldDecorator, getFieldsError, getFieldError, isFieldTouched)
 
   const usernameError = isFieldTouched('username') && getFieldError('username');
   const passwordError = isFieldTouched('password') && getFieldError('password');
@@ -18,8 +19,16 @@ const Login = props => {
     props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        axiosWithAuth()
+          .post('/api/login', values)
+          .then(res => {
+            localStorage.setItem('token', res.data.payload)
+            props.history.push('./friends')
+          })
+          .catch(err => console.log(err.response))
       }
     });
+
   };
 
   // colors subject to change as styling improves.
