@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Icon, Input, Button } from 'antd';
+import { Modal, Form, Icon, Input, Button } from 'antd';
 
 
 const initialLoginState = {
@@ -27,9 +27,9 @@ const Login = props => {
     });
   };
 
-
+  // colors subject to change as styling improves.
   return (
-    <div>
+    <Modal>
       <h1> Login Component</h1>
       <Form layout="inline" onSubmit={handleSubmit}>
         <Form.Item validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
@@ -59,7 +59,7 @@ const Login = props => {
           </Button>
         </Form.Item>
       </Form>
-    </div>
+    </Modal>
   )
 }
 
