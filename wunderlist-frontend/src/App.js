@@ -1,11 +1,22 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+import Login from './components/Login';
+import PrivateRoute from './components/PrivateRoute';
+import Navigation from './components/Navigation';
+
 
 function App() {
   return (
-    <div className="App">
-      <h1>Wunderlist 2.0</h1>
-    </div>
+    <Router>
+      <div className="App">
+        <h1>Wunderlist 2.0</h1>
+        <Navigation />
+        <Switch>
+          <Route path='/login' component={Login} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

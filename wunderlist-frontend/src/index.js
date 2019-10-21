@@ -11,6 +11,7 @@ import "./index.css";
 import App from "./App";
 import { reducer } from "./reducers";
 
+
 /*store*/
 const store = createStore(reducer, applyMiddleware(thunk));
 
