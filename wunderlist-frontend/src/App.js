@@ -1,11 +1,17 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import Login from './components/Login';
+import PrivateRoute from './components/PrivateRoute';
+
 
 function App() {
   return (
-    <div className="App">
-      <h1>Wunderlist 2.0</h1>
-    </div>
+    <Router>
+      <div className="App">
+        <h1>Wunderlist 2.0</h1>
+      </div>
+    </Router>
   );
 }
 
