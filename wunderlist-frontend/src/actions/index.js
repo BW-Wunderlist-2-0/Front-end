@@ -36,7 +36,6 @@ export const login = credentials => dispatch => {
     .post('/login', credentials)
     .then(res => {
       console.log(`res aWA in login`, res)
-      console.log(`res.data.payload aWA in login`, res.data.payload);
       // localStorage.authToken = res.data.token
       localStorage.setItem('token', res.data.token)
       browserHistory.push('/home')
