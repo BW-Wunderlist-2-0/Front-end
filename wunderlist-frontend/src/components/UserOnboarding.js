@@ -9,10 +9,10 @@ const initialFormState = {
   confirmDirty: false
 }
 
-const initialUserInfo = {
-  username: '',
-  password: ''
-}
+// const initialUserInfo = {
+//   username: '',
+//   password: ''
+// }
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -21,7 +21,7 @@ function hasErrors(fieldsError) {
 
 const UserOnboarding = props => {
   const [formState, setFormState] = useState(initialFormState)
-  const [userInfo, setUserInfo] = useState(initialUserInfo)
+  // const [userInfo, setUserInfo] = useState(initialUserInfo)
 
   console.log(`UserOnboarding props`, props);
 
@@ -37,12 +37,14 @@ const UserOnboarding = props => {
     props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
-        setUserInfo({
+        let newUser = {
           username: values.username,
           password: values.password
-        });
+        }
+        console.log(`newUser in handleSubmit`, newUser)
+        submitRegistration(newUser);
+
       }
-      submitRegistration(userInfo);
     });
   };
 

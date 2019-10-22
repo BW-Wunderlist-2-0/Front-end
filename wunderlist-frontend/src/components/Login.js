@@ -20,10 +20,10 @@ const Login = props => {
       if (!err) {
         console.log('Received values of form: ', values);
         axiosWithAuth()
-          .post('/api/login', values)
+          .post('/login', values)
           .then(res => {
             localStorage.setItem('token', res.data.payload)
-            props.history.push('./friends')
+            props.history.push('./home')
           })
           .catch(err => console.log(err.response))
       }
