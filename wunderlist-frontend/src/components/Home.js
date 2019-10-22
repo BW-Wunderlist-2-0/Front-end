@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Drawer, Button } from 'antd';
 
 import { connect } from 'react-redux';
-
+import TodoItem from './TodoItem';
 //Import ToDo component to map over component list
 // Import SearchTasks component
 // import EditTask component
@@ -23,7 +23,9 @@ const Home = props => {
     <div>
       <h1>Home Component</h1>
       <Button onClick={toggleDrawer}>Show Menu</Button>
-
+      {props.tasks.map(entry => 
+        <TodoItem key={entry.id} task={entry}/>
+      )}
       {showMenu
         &&
         <Drawer
