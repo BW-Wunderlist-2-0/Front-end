@@ -1,33 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Icon, Input, Button } from 'antd';
+import { connect } from 'react-redux';
 
-import { axiosWithAuth } from '../utilities/axiosWithAuth';
+import { login } from '../actions';
 
-function hasErrors(fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field]);
-}
 
 const Login = props => {
-  const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form
+  const [formInput, setFormInput] = useState({
+    username: '',
+    password: ''
+  })
   // console.log(`props.form`, getFieldDecorator, getFieldsError, getFieldError, isFieldTouched)
+  const handleChange = e => {
+    // console.log(e)
+    setFormInput({
+      ...formInput,
+      [e.target.name]: e.target.value,
+    })
+  }
 
-  const usernameError = isFieldTouched('username') && getFieldError('username');
-  const passwordError = isFieldTouched('password') && getFieldError('password');
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-        axiosWithAuth()
-          .post('/login', values)
-          .then(res => {
-            localStorage.setItem('token', res.data.payload)
-            props.history.push('./home')
-          })
-          .catch(err => console.log(err.response))
-      }
-    });
+    props.login(formInput)
+    // login({
+    //   username: values.username,
+    //   password: values.password
+    // })
+
+    console.log('Received values of form: ', formInput);
 
   };
 
@@ -36,29 +37,27 @@ const Login = props => {
     <>
       <h1> Login Component</h1>
       <Form layout="inline" onSubmit={handleSubmit}>
-        <Form.Item validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
-          {getFieldDecorator('username', {
-            rules: [{ required: true, message: 'Please input your username!' }],
-          })(
-            <Input
-              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Username"
-            />,
-          )}
+        <Form.Item >
+          <Input
+            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder="Username" name='username' value={formInput.username} onChange={handleChange}
+          />
+
         </Form.Item>
-        <Form.Item validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
-          {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }],
-          })(
-            <Input
-              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              type="password"
-              placeholder="Password"
-            />,
-          )}
+        <Form.Item >
+
+          <Input
+            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            type="password"
+            placeholder="Password"
+            name='password'
+            value={formInput.password}
+            onChange={handleChange}
+          />
+
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
+          <Button type="primary" htmlType="submit" >
             Log in
           </Button>
         </Form.Item>
@@ -67,7 +66,15 @@ const Login = props => {
   )
 }
 
-const WrappedLogin = Form.create({ name: 'login' })(Login);
+const mapStateToProps = state => {
+  return {
+    loginReducer: state.loginReducer
+  }
+}
 
 
-export default WrappedLogin;
+
+
+export default connect(mapStateToProps, { login })(Login);
+
+// export default Login;

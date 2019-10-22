@@ -1,12 +1,10 @@
-// Reducers index.js
+import * as actionType from '../actions';
 
-/*dependencies*/
-import { FETCH_LOADING, FETCH_LIST_SUCCESS, FAILED_TO_FETCH } from "../actions";
-
-const initialState = {
-  loginStatus: {
-    loggingIn: false,
-    loggedIn: false
+const initialTodoState = {
+  authState: {
+    isAuthenticating: false,
+    currentUser: null,
+    errorMessage: null
   },
   tasks: [
     {
@@ -30,9 +28,9 @@ const initialState = {
   }
 };
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case FETCH_LOADING:
+const todoReducer = (state = initialTodoState, action) => {
+  switch (actionType) {
+    case actionType.FETCH_LOADING:
       return {
         ...state,
         dataFetching: {
@@ -41,7 +39,7 @@ const reducer = (state = initialState, action) => {
           error: ""
         }
       };
-    case FETCH_LIST_SUCCESS:
+    case actionType.FETCH_LIST_SUCCESS:
       return {
         ...state,
         dataFetching: {
@@ -50,7 +48,7 @@ const reducer = (state = initialState, action) => {
           error: ""
         }
       };
-    case FAILED_TO_FETCH:
+    case actionType.FAILED_TO_FETCH:
       return {
         ...state,
         dataFetching: {
@@ -63,6 +61,6 @@ const reducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
+}
 
-export default reducer;
+export default todoReducer;

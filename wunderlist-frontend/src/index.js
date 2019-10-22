@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 /*components*/
 import "./index.css";
 import App from "./App";
-import rootReducer from './reducers'
+import rootReducer from './reducers/rootReducer'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk))
