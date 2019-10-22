@@ -13,12 +13,15 @@ import WrappedOnboardingForm from './components/UserOnboarding';
 
 
 function App(props) {
+  const { isAuthenticating, currentUser, errorMessage } = props.login
+
+
   return (
     <Router history={browserHistory}>
       <div className="App">
         <h1>Wunderlist 2.0</h1>
         <Navigation />
-        {props.isAuthenticating && <Spin tip='Logging In...' />}
+        {isAuthenticating && <Spin tip='Logging In...' />}
         <Switch>
           <Route path='/signup' component={WrappedOnboardingForm} />
           {/* PrivateRoute temporarily disabled, home component renderred in route */}
@@ -35,7 +38,7 @@ function App(props) {
 const mapStateToProps = state => {
   console.log(`props in mSTP in App.js`, state)
   return {
-    isAuthenticating: state.isAuthenticating
+    login: state.loginReducer
   }
 }
 
