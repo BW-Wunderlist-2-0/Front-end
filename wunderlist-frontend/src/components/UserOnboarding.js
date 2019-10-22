@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Icon, Button } from 'antd';
 
-import history from '../history';
 import { submitRegistration } from '../utilities/submitRegistration'
 
 
@@ -24,7 +23,8 @@ const UserOnboarding = props => {
     e.preventDefault();
     submitRegistration(formInput)
     console.log('Received values of form: ', formInput);
-    history.push('/')
+    //migrate this to submitRegistration vv
+    props.history.push('/')
   };
 
   console.log(`UserOnboarding props`, props);

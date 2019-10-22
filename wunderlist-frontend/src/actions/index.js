@@ -4,9 +4,10 @@
 /*dependencies*/
 import jwtDecode from 'jwt-decode';
 
+import { browserHistory } from '../'
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
 
-import history from '../history';
+
 /*named consts for typo-proofing*/
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
@@ -38,8 +39,9 @@ export const login = credentials => dispatch => {
       console.log(`res.data.payload aWA in login`, res.data.payload);
       // localStorage.authToken = res.data.token
       localStorage.setItem('token', res.data.token)
+      browserHistory.push('/home')
       dispatch({ type: LOGIN_SUCCESS, user: jwtDecode(res.data.token) })
-      history.push('./home')
+      browserHistory.push('/home')
     })
     .catch(res => dispatch({ type: LOGIN_FAILURE, errorMessage: res.data.error }))
 }

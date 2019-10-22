@@ -1,11 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Spin } from 'antd';
 
 
 import Login from './components/Login';
-import history from './history';
+import { browserHistory } from './'
 import Home from './components/Home';
 import PrivateRoute from './components/PrivateRoute';
 import Navigation from './components/Navigation';
@@ -14,7 +14,7 @@ import WrappedOnboardingForm from './components/UserOnboarding';
 
 function App(props) {
   return (
-    <Router history={history}>
+    <Router history={browserHistory}>
       <div className="App">
         <h1>Wunderlist 2.0</h1>
         <Navigation />
@@ -25,7 +25,7 @@ function App(props) {
           <Route path='/home' component={Home} />
           {/* <PrivateRoute path='/home' component={Home} /> */}
           <Route path='/home' component={Home} />
-          <Route path='/login' component={Login} />
+          <Route exact path='/login' component={Login} />
         </Switch>
       </div>
     </Router>
