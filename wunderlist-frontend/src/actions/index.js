@@ -1,8 +1,16 @@
 // Actions index.js
+
+
 /*dependencies*/
 import axios from "axios";
 
+import axiosWithAuth from '../utilities/axiosWithAuth';
+
 /*named consts for typo-proofing*/
+
+export const LOGGING_IN = 'LOGGING_IN'
+export const LOG_IN_FAILED = 'LOG_IN_FAILED'
+export const IS_LOGGED_IN = 'IS_LOGGED_IN'
 
 export const LOADING = "LOADING";
 export const FETCH_LIST_SUCCESS = "FETCH_LIST_SUCCESS";
