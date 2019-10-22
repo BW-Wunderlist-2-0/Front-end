@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Drawer, Button } from 'antd';
+
+import { connect } from 'react-redux';
 
 //Import ToDo component to map over component list
 // Import SearchTasks component
@@ -8,9 +10,10 @@ import { Drawer, Button } from 'antd';
 
 
 
-const Home = () => {
+const Home = props => {
   const [showMenu, setShowMenu] = useState(false)
 
+  console.log(`Home component props from mapStateToProps`, props)
   const toggleDrawer = () => {
     setShowMenu(!showMenu)
   }
@@ -34,4 +37,10 @@ const Home = () => {
   )
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    tasks: state.tasks
+  }
+}
+
+export default connect(mapStateToProps, {})(Home);
