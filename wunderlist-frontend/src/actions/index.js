@@ -42,7 +42,10 @@ export const login = credentials => dispatch => {
       dispatch({ type: LOGIN_SUCCESS, user: jwtDecode(res.data.token) })
       browserHistory.push('/home')
     })
-    .catch(res => dispatch({ type: LOGIN_FAILURE, errorMessage: res.data.error }))
+    .catch(err => {
+      console.log(err)
+      dispatch({ type: LOGIN_FAILURE, errorMessage: err.toString() })
+    })
 }
 
 const logout = () => {

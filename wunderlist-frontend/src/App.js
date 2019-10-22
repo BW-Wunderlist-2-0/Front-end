@@ -22,6 +22,7 @@ function App(props) {
         <h1>Wunderlist 2.0</h1>
         <Navigation />
         {isAuthenticating && <Spin tip='Logging In...' />}
+        {errorMessage && <span>{errorMessage}</span>}
         <Switch>
           <Route path='/signup' component={WrappedOnboardingForm} />
           {/* PrivateRoute temporarily disabled, home component renderred in route */}
