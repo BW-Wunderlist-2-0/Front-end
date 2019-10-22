@@ -96,7 +96,7 @@ const UserOnboarding = props => {
         </Form.Item>
         <Form.Item validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
           {getFieldDecorator('confirmPassword', {
-            rules: [{ required: true, message: 'Please confirm password.' }, {
+            rules: [{ required: true, message: 'Please confirm passwords match.' }, {
               validator: compareToFirstPassword()
             }]
           })
