@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { Form, Input, Icon, Button } from 'antd';
 
+import { axiosWithAuth } from '../utilities/axiosWithAuth';
+import { submitRegistration } from '../utilities/submitRegistration'
 
 
-const initialState = {
+const initialFormState = {
   confirmDirty: false
+}
+
+const initialUserInfo = {
+  username: '',
+  password: ''
 }
 
 function hasErrors(fieldsError) {
@@ -13,7 +20,8 @@ function hasErrors(fieldsError) {
 
 
 const UserOnboarding = props => {
-  const [formState, setFormState] = useState(initialState)
+  const [formState, setFormState] = useState(initialFormState)
+  const [userInfo, setUserInfo] = useState(initialUserInfo)
 
   console.log(`UserOnboarding props`, props);
 
@@ -22,12 +30,19 @@ const UserOnboarding = props => {
   const usernameError = isFieldTouched('username') && getFieldError('username');
   const passwordError = isFieldTouched('password') && getFieldError('password');
 
+
+
   const handleSubmit = e => {
     e.preventDefault();
     props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        console.log('Received values of form: ', values)
+        setUserInfo({
+          username: values.username,
+          password: values.password
+        });
       }
+      submitRegistration(userInfo);
     });
   };
 

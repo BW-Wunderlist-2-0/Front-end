@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Icon, Input, Button } from 'antd';
 
-import axiosWithAuth from '../utilities/axiosWithAuth';
+import { axiosWithAuth } from '../utilities/axiosWithAuth';
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
