@@ -6,6 +6,7 @@ import { login } from '../actions';
 
 
 const Login = props => {
+  console.log(`props in Login.js`, props)
   const [formInput, setFormInput] = useState({
     username: '',
     password: ''
