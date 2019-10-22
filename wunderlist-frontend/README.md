@@ -28,7 +28,22 @@ The app is contained in /Front-end/wunderlist-frontend. Be sure to navigate to t
 
 - ❗️**DO NOT** fork the project. There is no need to fork a project in Lambda Labs/Build Sprints because YOU own them.
 - Clone the master branch of the repository.
-- Checkout a branch (`git checkout -b <branch-name>`) every time you start work on a new feature.  Make sure the feature + your name is in the title of the branch.  Example: `Nav-Bar-AustenAllred`
+- Checkout a branch (`git checkout -b <branch-name>`) every time you start work on a new feature. Make sure the feature + your name is in the title of the branch. Example: `Nav-Bar-AustenAllred`
 - Open a Pull Request Draft and add your Project Leader as a reviewer so that they can perform a code review.
-    - [https://github.blog/2019-02-14-introducing-draft-pull-requests/](https://github.blog/2019-02-14-introducing-draft-pull-requests/)
+  - [https://github.blog/2019-02-14-introducing-draft-pull-requests/](https://github.blog/2019-02-14-introducing-draft-pull-requests/)
 - Project Leaders will merge branches back into the master branch once a code review has been completed.
+
+## Day One Recap
+
+- Scaffolding was complete, some additional components will need to be added.
+- App successfully validates a new user form and creates a new user on BE via UserOnboarding component.
+- Initial Redux store established, a number of actions and reducers have been created.
+
+#### To Complete:
+
+[] Redirect after successful login
+[] Incorporate server error messages into UserOnboarding
+[] Add Login functionality
+[] Create dummy data for to-do lists
+[] Build out Create and Edit components
+[] Build out Item presentational component
