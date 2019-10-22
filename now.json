@@ -3,7 +3,7 @@
   "name": "Wunderlist 2.0",
   "builds": [
     {
-      "src": "Front-end/wunderlist-frontend/package.json",
+      "src": "/wunderlist-frontend/package.json",
       "use": "@now/static-build",
       "config": { "distDir": "build" }
     }
