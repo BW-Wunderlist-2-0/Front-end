@@ -9,6 +9,8 @@
     "customize-cra": "^0.8.0",
     "eslint": "^6.5.1",
     "global": "^4.4.0",
+    "history": "^4.10.1",
+    "jwt-decode": "^2.2.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "react": "^16.10.2",
