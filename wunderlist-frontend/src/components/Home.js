@@ -31,6 +31,11 @@ const Home = props => {
     displaySetter(!display)
   }
 
+  const hideEdit = e => {
+    e.preventDefault();
+    props.cancelEditTask();
+  }
+
   return (
     <div>
       <h1>Home Component</h1>
@@ -61,7 +66,7 @@ const Home = props => {
         title='Edit Task'
         visible={props.edit.isEditing}
         footer={false}
-        onCancel={cancelEditTask}
+        onCancel={hideEdit}
       >
         <EditTask />
       </Modal>
@@ -93,4 +98,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {})(Home);
+export default connect(mapStateToProps, { cancelEditTask })(Home);
