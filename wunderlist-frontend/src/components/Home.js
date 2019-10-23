@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import AddTask from './AddTask';
 import Task from './Task';
 import EditTask from './EditTask';
+import { selectEditTask, cancelEditTask } from '../actions'
 //Import ToDo component to map over component list
 // import TodoItem from './TodoItem';
 // Import SearchTasks component
@@ -17,7 +18,7 @@ import EditTask from './EditTask';
 const Home = props => {
   const [showMenu, setShowMenu] = useState(false)
   const [addItemModal, setAddItemModal] = useState(false)
-  const [editItemModal, setEditItemModal] = useState(false)
+  // const [editItemModal, setEditItemModal] = useState(false)
 
   console.log(`Home component props from mapStateToProps`, props)
 
@@ -55,13 +56,12 @@ const Home = props => {
       >
         <AddTask />
       </Modal>
+
       <Modal
         title='Edit Task'
-        visible={editItemModal}
+        visible={props.edit.isEditing}
         footer={false}
-        onCancel={e => toggleDisplay(e, addItemModal, setAddItemModal)}
-        editItemModal={editItemModal}
-        setEditItemModal={setEditItemModal}
+        onCancel={cancelEditTask}
       >
         <EditTask />
       </Modal>
@@ -87,7 +87,9 @@ const mapStateToProps = state => {
   console.log(`Home.js mSTP state`, state, `tasks`, state.todoReducer.tasks)
   return {
     dataFetching: state.todoReducer.dataFetching,
-    tasks: state.todoReducer.tasks
+    tasks: state.todoReducer.tasks,
+    edit: state.editReducer
+
   }
 }
 

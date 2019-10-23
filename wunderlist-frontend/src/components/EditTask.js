@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Icon, DatePicker, Radio, Button } from 'antd'
 import moment from 'moment';
+import { connect } from 'react-redux'
 
 import { handleFormChange } from '../utilities/handleFormChange'
 import { toggleDisplay } from '../utilities/toggleDisplay';
@@ -82,5 +83,12 @@ const EditTask = props => {
   )
 }
 
+const mapStateToProps = state => {
+  console.log(`EditTask mSTP state`, state)
+  return {
+    edit: state.editReducer,
+    task: state.editReducer.task
+  }
+}
 
-export default EditTask;
+export default connect(mapStateToProps, {})(EditTask);

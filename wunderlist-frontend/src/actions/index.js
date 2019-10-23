@@ -45,6 +45,11 @@ export const selectEditTask = task => dispatch => {
   console.log(`action selectEditTask task`, task);
 
 }
+export const cancelEditTask = task => dispatch => {
+  dispatch({ type: FINISH_EDIT, payload: { isEditing: false, task } })
+  console.log(`action selectEditTask task`, task);
+
+}
 
 const logout = () => {
   delete localStorage.authToken
