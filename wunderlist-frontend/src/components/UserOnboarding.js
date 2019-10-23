@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Icon, Button } from 'antd';
 
 import { submitRegistration } from '../utilities/submitRegistration'
+import { handleFormChange } from '../utilities/handleFormChange';
 
 
 const UserOnboarding = props => {
@@ -9,14 +10,7 @@ const UserOnboarding = props => {
     username: '',
     password: ''
   })
-  // console.log(`props.form`, getFieldDecorator, getFieldsError, getFieldError, isFieldTouched)
-  const handleChange = e => {
-    // console.log(e)
-    setFormInput({
-      ...formInput,
-      [e.target.name]: e.target.value,
-    })
-  }
+
 
 
   const handleSubmit = e => {
@@ -39,7 +33,7 @@ const UserOnboarding = props => {
 
           <Input
             prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-            placeholder="Username" name='username' value={formInput.username} onChange={handleChange}
+            placeholder="Username" name='username' value={formInput.username} onChange={(e) => handleFormChange(e, formInput, setFormInput)}
           />
 
         </Form.Item>
@@ -51,7 +45,7 @@ const UserOnboarding = props => {
             placeholder="Password"
             name='password'
             value={formInput.password}
-            onChange={handleChange}
+            onChange={(e) => handleFormChange(e, formInput, setFormInput)}
           />
 
         </Form.Item>

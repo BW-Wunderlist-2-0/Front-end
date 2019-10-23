@@ -3,6 +3,7 @@ import { Form, Icon, Input, Button } from 'antd';
 import { connect } from 'react-redux';
 
 import { login } from '../actions';
+import { handleFormChange } from '../utilities/handleFormChange';
 
 
 const Login = props => {
@@ -12,13 +13,21 @@ const Login = props => {
     password: ''
   })
   // console.log(`props.form`, getFieldDecorator, getFieldsError, getFieldError, isFieldTouched)
-  const handleChange = e => {
-    // console.log(e)
-    setFormInput({
-      ...formInput,
-      [e.target.name]: e.target.value,
-    })
-  }
+  // const handleChange = e => {
+
+  //   setFormInput({
+  //     ...formInput,
+  //     [e.target.name]: e.target.value,
+  //   })
+  // }
+
+  // const handleChange = (e, formState, formStateSetter) => {
+
+  //   formStateSetter({
+  //     ...formState,
+  //     [e.target.name]: e.target.value
+  //   });
+  // }
 
 
   const handleSubmit = e => {
@@ -41,7 +50,7 @@ const Login = props => {
         <Form.Item >
           <Input
             prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-            placeholder="Username" name='username' value={formInput.username} onChange={handleChange}
+            placeholder="Username" name='username' value={formInput.username} onChange={(e) => handleFormChange(e, formInput, setFormInput)}
           />
 
         </Form.Item>
@@ -53,7 +62,7 @@ const Login = props => {
             placeholder="Password"
             name='password'
             value={formInput.password}
-            onChange={handleChange}
+            onChange={(e) => handleFormChange(e, formInput, setFormInput)}
           />
 
         </Form.Item>
