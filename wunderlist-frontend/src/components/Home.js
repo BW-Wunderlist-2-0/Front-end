@@ -47,7 +47,9 @@ const Home = props => {
         visible={addItemModal}
         footer={false}
         onCancel={e => toggleDisplay(e, addItemModal, setAddItemModal)}
-
+        toggleDisplay={toggleDisplay}
+        addItemModal={addItemModal}
+        setAddItemModal={setAddItemModal}
       >
         <AddTask />
       </Modal>
