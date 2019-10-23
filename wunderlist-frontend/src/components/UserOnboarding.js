@@ -51,7 +51,7 @@ const UserOnboarding = props => {
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" >
-            Log in
+            Sign Up
           </Button>
         </Form.Item>
       </Form>
