@@ -12,15 +12,16 @@ const initialTodoState = {
       item: "Water Plants",
       dateCreated: 1571759424652,
       completed: false,
-      recurring: false
+      recurring: false,
+      recurringFrequency: 'monthly'
     },
     {
       userid: 1,
       id: 2,
       item: "Laundry",
       dateCreated: 1571759441517,
-      completed: false,
-      recurring: false
+      recurring: false,
+      recurringFrequency: 'weekly'
     }
   ]
 };

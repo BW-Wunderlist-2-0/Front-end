@@ -17,7 +17,8 @@ export const FAILED_TO_FETCH = "FAILED_TO_FETCH";
 
 // Task Editing
 export const START_EDIT = 'START_EDIT';
-export const FINISH_EDIT = 'FINISH_EDIT';
+export const SUBMIT_EDIT = 'SUBMIT_EDIT'
+export const CANCEL_EDIT = 'CANCEL_EDIT';
 
 /*actions*/
 
@@ -29,9 +30,9 @@ export const login = credentials => dispatch => {
     .then(res => {
       console.log(`res aWA in login`, res)
       // localStorage.authToken = res.data.token
+      dispatch({ type: LOGIN_SUCCESS, user: jwtDecode(res.data.token) })
       localStorage.setItem('token', res.data.token)
       browserHistory.push('/home')
-      dispatch({ type: LOGIN_SUCCESS, user: jwtDecode(res.data.token) })
       browserHistory.push('/home')
     })
     .catch(err => {
@@ -46,12 +47,18 @@ export const selectEditTask = task => dispatch => {
 
 }
 export const cancelEditTask = task => dispatch => {
-  dispatch({ type: FINISH_EDIT, payload: { isEditing: false } })
-  console.log(`action selectEditTask task`, task);
-
+  dispatch({ type: CANCEL_EDIT, payload: { isEditing: false } })
+  console.log(`action cancelEditTask task`, task);
 }
 
-const logout = () => {
+export const submitEditTask = task =>
+  dispatch => {
+    dispatch({ type: SUBMIT_EDIT, payload: { isEditing: false } })
+    // API cal to update
+    console.log(`action submitEditTask task`, task)
+  }
+
+const logout = task => {
   delete localStorage.authToken
-  return { type: LOGOUT }
+  return { type: LOGOUT, payload: { isEditing: false, task } }
 }

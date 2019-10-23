@@ -39,9 +39,9 @@ const Home = props => {
   return (
     <div>
       <h1>Home Component</h1>
-
       <Button onClick={toggleDrawer}>Show Menu</Button>
       <Button onClick={e => toggleDisplay(e, addItemModal, setAddItemModal)}>Add Task</Button>
+      <h4>Hello, {props.activeUser.username}</h4>
       {showMenu
         &&
         <Drawer
@@ -93,7 +93,8 @@ const mapStateToProps = state => {
   return {
     dataFetching: state.todoReducer.dataFetching,
     tasks: state.todoReducer.tasks,
-    edit: state.editReducer
+    edit: state.editReducer,
+    activeUser: state.loginReducer.currentUser
 
   }
 }

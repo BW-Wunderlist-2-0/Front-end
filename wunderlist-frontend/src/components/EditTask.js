@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Icon, DatePicker, Radio, Button } from 'antd'
 import moment from 'moment';
 import { connect } from 'react-redux'
@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { handleFormChange } from '../utilities/handleFormChange'
 import { toggleDisplay } from '../utilities/toggleDisplay';
 // const { MonthPicker, RangePicker } = DatePicker;
+import { selectEditTask, cancelEditTask, submitEditTask } from '../actions'
 
 
 
@@ -17,19 +18,27 @@ const EditTask = props => {
     item: '',
     dateCreated: '',
     recurring: false,
-    recurringFrequency: 'Once'
+    recurringFrequency: null
   }
 
-  const [formInput, setFormInput] = useState(props.task)
-  const [addItemModal, setAddItemModal] = useState([props.addItemModal, props.setAddItemModal]);
+
+  const [formInput, setFormInput] = useState({})
+  const [addItemModal, setAddItemModal] = useState(props.edit.isEditing);
+
   // const { addItemModal, setAddItemModal } = props;
+  useEffect(() => {
+    console.log(`useEffect props`, props)
+    setFormInput(props.task)
+    console.log(`uE formInput`, formInput)
+  }, [props.task])
+
 
   const handleSubmit = e => {
     e.preventDefault();
     console.log('Received values of EditTask Form: ', formInput);
-    setFormInput(initialState)
-
-    toggleDisplay(e, addItemModal, setAddItemModal)
+    props.submitEditTask(formInput)
+    // setFormInput(initialState)
+    // toggleDisplay(e, addItemModal, setAddItemModal)
   };
 
   const handleDateChange = e => {
@@ -51,6 +60,7 @@ const EditTask = props => {
   }
 
 
+  console.log(`editTask formInput`, formInput)
 
   return (
     <>
@@ -59,7 +69,7 @@ const EditTask = props => {
           <Input
             type='text'
             name='item'
-            value={formInput.item}
+            value={props.task.item}
             onChange={e => handleFormChange(e, formInput, setFormInput)}
           />
         </Form.Item>
@@ -68,11 +78,11 @@ const EditTask = props => {
         </Form.Item>
 
         <Form.Item>
-          <Radio.Group value={formInput.recurringFrequency} onChange={handleRadioChange}>
-            <Radio value='Once'>Once</Radio>
-            <Radio value='Daily'>Daily</Radio>
-            <Radio value='Weekly'>Weekly</Radio>
-            <Radio value='Monthly'>Monthly</Radio>
+          <Radio.Group value={props.task.recurringFrequency} onChange={handleRadioChange}>
+            <Radio value='once'>Once</Radio>
+            <Radio value='daily'>Daily</Radio>
+            <Radio value='weekly'>Weekly</Radio>
+            <Radio value='monthly'>Monthly</Radio>
           </Radio.Group >
         </Form.Item>
 
@@ -91,4 +101,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {})(EditTask);
+export default connect(mapStateToProps, { cancelEditTask, submitEditTask })(EditTask);

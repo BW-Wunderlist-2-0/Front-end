@@ -19,11 +19,15 @@ const editReducer = (state = initialState, action = {}) => {
         isEditing: true,
         task: action.payload.task
       }
-    case actionType.FINISH_EDIT:
+    case actionType.CANCEL_EDIT:
       return {
         ...initialState,
         isEditing: action.payload.isEditing,
-
+      }
+    case actionType.SUBMIT_EDIT:
+      return {
+        ...initialState,
+        isEditing: action.payload.isEditing
       }
     default:
       return state;
