@@ -26,8 +26,8 @@ function App(props) {
         <Switch>
           <Route path='/signup' component={WrappedOnboardingForm} />
           {/* PrivateRoute temporarily disabled, home component renderred in route */}
-          <Route path='/home' component={Home} />
-          {/* <PrivateRoute path='/home' component={Home} /> */}
+          {/* <Route path='/home' component={Home} /> */}
+          <PrivateRoute path='/home' component={Home} />
           <Route path='/home' component={Home} />
           <Route exact path='/login' component={Login} />
         </Switch>

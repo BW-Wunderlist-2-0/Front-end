@@ -51,7 +51,7 @@ const Home = props => {
       <h1>Home Component</h1>
       <Button onClick={toggleDrawer}>Show Menu</Button>
       <Button onClick={e => toggleDisplay(e, addItemModal, setAddItemModal)}>Add Task</Button>
-      <h4>Hello, {props.activeUser.username}</h4>
+      {/* {props.activeUser.username && <h4>Hello, {props.activeUser.username}</h4>} */}
       {showMenu
         &&
         <Drawer
