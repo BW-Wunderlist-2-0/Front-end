@@ -4,6 +4,8 @@ import { Drawer, Button, Icon, List, Modal } from 'antd';
 import { connect } from 'react-redux';
 
 import AddTask from './AddTask';
+import Task from './Task';
+import EditTask from './EditTask';
 //Import ToDo component to map over component list
 // import TodoItem from './TodoItem';
 // Import SearchTasks component
@@ -15,6 +17,7 @@ import AddTask from './AddTask';
 const Home = props => {
   const [showMenu, setShowMenu] = useState(false)
   const [addItemModal, setAddItemModal] = useState(false)
+  const [editItemModal, setEditItemModal] = useState(false)
 
   console.log(`Home component props from mapStateToProps`, props)
 
@@ -47,25 +50,32 @@ const Home = props => {
         visible={addItemModal}
         footer={false}
         onCancel={e => toggleDisplay(e, addItemModal, setAddItemModal)}
-        toggleDisplay={toggleDisplay}
         addItemModal={addItemModal}
         setAddItemModal={setAddItemModal}
       >
         <AddTask />
       </Modal>
+      <Modal
+        title='Edit Task'
+        visible={editItemModal}
+        footer={false}
+        onCancel={e => toggleDisplay(e, addItemModal, setAddItemModal)}
+        editItemModal={editItemModal}
+        setEditItemModal={setEditItemModal}
+      >
+        <EditTask />
+      </Modal>
       <div>
         <List
           itemLayout='horizontal'
-          dataSource={props.tasks}
-          renderItem={item => (
-            <List.Item>
-              <List.Item.Meta
-                title={item.item}
-              />
-              <Icon type="close" />
-            </List.Item>
+        >
+
+          {props.tasks.map(item =>
+            <Task key={item.id} task={item} />
           )}
-        />
+        </List>
+
+
 
 
       </div>

@@ -1,28 +1,31 @@
-// import React from 'react';
-// import { List, Icon, Skeleton } from 'antd';
+import React from 'react';
+import { List, Icon, Skeleton, Button } from 'antd';
 
-// const TodoItem = props => {
+const Task = props => {
 
-//   // when clicked on expands to Modal? with more information
-//   // try containing the Modal in this component
-
-//   return (
-//     <>
-//       {/* render item name */}
-//       <List.Item
-//       >
-//         <List.Item.Meta
-//           title={task.task}
-//         />
-//       </List.Item>
-//       {/* render item created date */}
-//       {/* render item due date */}
-//       {/* render recurring properties */}
-
-//     </>
+  // when clicked on expands to Modal? with more information
+  // try containing the Modal in this component
 
 
-//   )
-// }
+  const editTask = e => {
+    e.preventDefault();
+    console.log(props.task.id)
+  }
 
-// export default TodoItem;
+
+  return (
+    <>
+
+      <List.Item
+        actions={[<a onClick={editTask}>edit</a>, <Icon type="close" />]}>
+        <List.Item.Meta
+          title={props.task.item}
+        />
+      </List.Item>
+    </>
+
+
+  )
+}
+
+export default Task;

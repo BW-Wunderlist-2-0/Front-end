@@ -1,7 +1,3 @@
-// Actions index.js
-
-
-/*dependencies*/
 import jwtDecode from 'jwt-decode';
 
 import { browserHistory } from '../'
@@ -19,15 +15,11 @@ export const FETCH_LOADING = "FETCH_LOADING";
 export const FETCH_LIST_SUCCESS = "FETCH_LIST_SUCCESS";
 export const FAILED_TO_FETCH = "FAILED_TO_FETCH";
 
+// Task Editing
+export const START_EDIT = 'START_EDIT';
+export const FINISH_EDIT = 'FINISH_EDIT';
+
 /*actions*/
-
-export const fetchList = () => dispatch => {
-  dispatch({ type: FETCH_LOADING });
-
-  // axios.get('some end point')
-  // .then(res => dispatch({ type: FETCH_LIST_SUCCESS, payload: res.whateverdatashapeis }))
-  // .catch(err => dispatch({ type: FAILED_TO_FETCH, payload: err }))
-};
 
 export const login = credentials => dispatch => {
   dispatch({ type: LOGIN_REQUEST })
@@ -46,6 +38,12 @@ export const login = credentials => dispatch => {
       console.log(err)
       dispatch({ type: LOGIN_FAILURE, errorMessage: err.toString() })
     })
+}
+
+export const selectEditTask = task => dispatch => {
+  dispatch({ type: START_EDIT, payload: { isEditing: true, task } })
+  console.log(`action selectEditTask task`, task);
+
 }
 
 const logout = () => {
