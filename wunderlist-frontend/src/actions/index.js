@@ -28,8 +28,11 @@ export const DELETE_TASK_FAILURE = "DELETE_TASK_FAILURE";
 
 // Task Editing
 export const START_EDIT = 'START_EDIT';
-export const SUBMIT_EDIT = 'SUBMIT_EDIT'
 export const CANCEL_EDIT = 'CANCEL_EDIT';
+
+export const SUBMIT_EDIT_START = 'SUBMIT_EDIT_START';
+export const SUBMIT_EDIT_SUCCESS = 'SUBMIT_EDIT_SUCCESS'
+export const SUBMIT_EDIT_FAILED = 'SUBMIT_EDIT_FAILED';
 
 /*actions*/
 
@@ -97,9 +100,20 @@ export const cancelEditTask = task => dispatch => {
   console.log(`action cancelEditTask task`, task);
 }
 
-export const submitEditTask = task =>
+export const submitEditTask = (task, tasks) =>
   dispatch => {
-    dispatch({ type: SUBMIT_EDIT, payload: { isEditing: false } })
+    dispatch({ type: SUBMIT_EDIT_START })
     // API cal to update
+    let newTaskList = tasks.filter(entry => entry.id !== task.id)
+    axiosWithAuth()
+      .put(`/tasks/${task.id}`, task)
+      .then(
+        dispatch({ type: SUBMIT_EDIT_SUCCESS, payload: { isEditing: false, newTaskList } })
+      )
+      .catch(err =>
+        dispatch({ type: SUBMIT_EDIT_FAILED, payload: err })
+      )
+
     console.log(`action submitEditTask task`, task)
   }
+

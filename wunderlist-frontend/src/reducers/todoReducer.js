@@ -3,29 +3,22 @@ import * as actionType from '../actions';
 const initialTodoState = {
   isLoading: false,
   error: "",
-  tasks: [
-    // {
-    //   userid: 1,
-    //   id: 1,
-    //   item: "Water Plants",
-    //   dateCreated: 1571759424652,
-    //   completed: false,
-    //   recurring: false,
-    //   recurringFrequency: 'monthly'
-    // },
-    // {
-    //   userid: 1,
-    //   id: 2,
-    //   item: "Laundry",
-    //   dateCreated: 1571759441517,
-    //   recurring: false,
-    //   recurringFrequency: 'weekly'
-    // }
-  ]
+  tasks: [],
+  editing: {
+    isEditing: false,
+    task: {
+      completed: false,
+      item: '',
+      dateCreated: null,
+      dateDue: null,
+      recurring: false,
+      recurringFrequency: ''
+    }
+  }
 };
 
 
-const todoReducer = (state = initialTodoState, action = {}) => {
+export const todoReducer = (state = initialTodoState, action = {}) => {
   switch (action.type) {
     case actionType.GET_TASKS_START:
       return {
@@ -46,10 +39,36 @@ const todoReducer = (state = initialTodoState, action = {}) => {
         isLoading: false,
         error: action.payload
       };
+    case actionType.START_EDIT:
+      return {
+        ...state,
+        editing: {
+          ...state.editing,
+          isEditing: true,
+          task: action.payload.task
+        }
+      }
+    case actionType.CANCEL_EDIT:
+      return {
+        ...state,
+        editing: {
+          ...state.editing,
+          isEditing: action.payload.isEditing,
+          tasks: initialTodoState.tasks
+        }
+      }
 
     default:
       return state;
   }
 }
+
+// export const editReducer = (state = initialState, action = {}) => {
+//   switch (action.type) {
+
+//     default:
+//       return state;
+//   }
+// }
 
 export default todoReducer;

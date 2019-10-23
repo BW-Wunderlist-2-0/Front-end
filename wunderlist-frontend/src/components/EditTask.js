@@ -22,7 +22,8 @@ const EditTask = props => {
   const handleSubmit = e => {
     e.preventDefault();
     console.log('Received values of EditTask Form: ', formInput);
-    props.submitEditTask(formInput)
+    //signal edit submit action here
+    submitEditTask(formInput, props.tasks)
   };
 
   const handleDateChange = e => {
@@ -80,8 +81,9 @@ const EditTask = props => {
 const mapStateToProps = state => {
   console.log(`EditTask mSTP state`, state)
   return {
-    edit: state.editReducer,
-    task: state.editReducer.task
+    edit: state.todoReducer.editing,
+    task: state.todoReducer.editing.task,
+    tasks: state.todoReducer.tasks
   }
 }
 

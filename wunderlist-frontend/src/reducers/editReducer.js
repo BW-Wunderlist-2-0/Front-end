@@ -25,11 +25,6 @@ const editReducer = (state = initialState, action = {}) => {
         ...initialState,
         isEditing: action.payload.isEditing,
       }
-    case actionType.SUBMIT_EDIT:
-      return {
-        ...initialState,
-        isEditing: action.payload.isEditing
-      }
     default:
       return state;
   }

@@ -96,7 +96,7 @@ const mapStateToProps = state => {
   return {
     dataFetching: state.todoReducer,
     tasks: state.todoReducer.tasks,
-    edit: state.editReducer,
+    edit: state.todoReducer.editing,
     activeUser: state.loginReducer.currentUser
 
   }
