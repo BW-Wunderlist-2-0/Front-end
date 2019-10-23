@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Drawer, Button } from 'antd';
+import { Drawer, Button, Icon, List } from 'antd';
 
 import { connect } from 'react-redux';
 
 //Import ToDo component to map over component list
+// import TodoItem from './TodoItem';
 // Import SearchTasks component
 // import EditTask component
 // import AddTask component
@@ -33,13 +34,34 @@ const Home = props => {
           onClose={toggleDrawer}
           visible={showMenu}
         />}
+      <div>
+        <List
+          itemLayout='horizontal'
+          dataSource={props.tasks}
+          renderItem={item => (
+            <List.Item>
+              <List.Item.Meta
+                title={item.item}
+              />
+              <Icon type="close" />
+            </List.Item>
+          )}
+        />
+
+        {/* {props.tasks.map(entry =>
+            <TodoItem key={entry.id} task={entry} />)}
+
+        </List> */}
+      </div>
     </div>
   )
 }
 
 const mapStateToProps = state => {
+  console.log(`Home.js mSTP state`, state, `tasks`, state.todoReducer.tasks)
   return {
-    tasks: state.tasks
+    dataFetching: state.todoReducer.dataFetching,
+    tasks: state.todoReducer.tasks
   }
 }
 

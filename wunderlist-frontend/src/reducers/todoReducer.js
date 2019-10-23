@@ -1,10 +1,9 @@
 import * as actionType from '../actions';
 
 const initialTodoState = {
-  authState: {
-    isAuthenticating: false,
-    currentUser: null,
-    errorMessage: null
+  dataFetching: {
+    isLoading: false,
+    error: "",
   },
   tasks: [
     {
@@ -12,6 +11,7 @@ const initialTodoState = {
       id: 1,
       item: "Water Plants",
       dateCreated: 1571759424652,
+      completed: false,
       recurring: false
     },
     {
@@ -19,14 +19,12 @@ const initialTodoState = {
       id: 2,
       item: "Laundry",
       dateCreated: 1571759441517,
+      completed: false,
       recurring: false
     }
-  ],
-  dataFetching: {
-    isLoading: false,
-    error: ""
-  }
+  ]
 };
+
 
 const todoReducer = (state = initialTodoState, action) => {
   switch (actionType) {
