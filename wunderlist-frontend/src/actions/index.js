@@ -11,9 +11,9 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT = 'LOGOUT';
 
-export const FETCH_LOADING = "FETCH_LOADING";
-export const FETCH_LIST_SUCCESS = "FETCH_LIST_SUCCESS";
-export const FAILED_TO_FETCH = "FAILED_TO_FETCH";
+export const GET_TASKS_START = "GET_TASKS_START";
+export const GET_TASKS_SUCCESS = "GET_TASKS_SUCCESS";
+export const GET_TASKS_FAILURE = "GET_TASKS_FAILURE";
 
 // Task Editing
 export const START_EDIT = 'START_EDIT';
@@ -26,7 +26,7 @@ export const login = credentials => dispatch => {
   dispatch({ type: LOGIN_REQUEST })
   console.log(`action login called`)
   axiosWithAuth()
-    .post('/login', credentials)
+    .post('/auth/login', credentials)
     .then(res => {
       console.log(`res aWA in login`, res)
       // localStorage.authToken = res.data.token
@@ -39,6 +39,17 @@ export const login = credentials => dispatch => {
       console.log(err)
       dispatch({ type: LOGIN_FAILURE, errorMessage: err.toString() })
     })
+}
+
+export const retrieveTasks = () => dispatch => {
+  dispatch({ type: GET_TASKS_START })
+  axiosWithAuth()
+    .get('/tasks')
+    .then(res => {
+      console.log(`aWA in retrieveTasks res`, res, `res.data`, res.data)
+      dispatch({ type: GET_TASKS_SUCCESS, payload: res.data })
+    })
+    .catch(err => dispatch({ type: GET_TASKS_FAILURE, payload: err }))
 }
 
 export const selectEditTask = task => dispatch => {

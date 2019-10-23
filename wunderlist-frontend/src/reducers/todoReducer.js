@@ -29,7 +29,7 @@ const initialTodoState = {
 
 const todoReducer = (state = initialTodoState, action) => {
   switch (actionType) {
-    case actionType.FETCH_LOADING:
+    case actionType.GET_TASKS_START:
       return {
         ...state,
         dataFetching: {
@@ -38,22 +38,23 @@ const todoReducer = (state = initialTodoState, action) => {
           error: ""
         }
       };
-    case actionType.FETCH_LIST_SUCCESS:
+    case actionType.GET_TASKS_SUCCESS:
       return {
         ...state,
         dataFetching: {
           ...state.dataFetching,
           isLoading: false,
           error: ""
-        }
+        },
+        tasks: action.payload.tasks
       };
-    case actionType.FAILED_TO_FETCH:
+    case actionType.GET_TASKS_FAILURE:
       return {
         ...state,
         dataFetching: {
           ...state.dataFetching,
           isLoading: false,
-          error: ""
+          error: action.payload
         }
       };
 

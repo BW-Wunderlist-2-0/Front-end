@@ -17,9 +17,12 @@ import { cancelEditTask } from '../actions'
 const Home = props => {
   const [showMenu, setShowMenu] = useState(false)
   const [addItemModal, setAddItemModal] = useState(false)
-  // const [editItemModal, setEditItemModal] = useState(false)
 
   console.log(`Home component props from mapStateToProps`, props)
+
+  //uE to execute getData func
+
+  //getData, executes aWa
 
   const toggleDrawer = () => {
     setShowMenu(!showMenu)
