@@ -2,7 +2,7 @@ import * as actionType from '../actions';
 
 // this is an add reducer not yet incorporated into the project
 const initialState = {
-  isEditing: false,
+  isSubmitting: false,
   task: {
     completed: false,
     item: '',
@@ -23,6 +23,7 @@ const addReducer = (state = initialState, action = {}) => {
       }
     case actionType.ADD_TASK_SUCCESS:
       return {
+        ..state,
 
 
       }

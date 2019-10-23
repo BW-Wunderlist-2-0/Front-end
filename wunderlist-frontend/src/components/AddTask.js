@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Icon, DatePicker, Radio, Button } from 'antd'
 import moment from 'moment';
 
+import { axiosWithAuth } from '../utilities/axiosWithAuth';
 import { handleFormChange } from '../utilities/handleFormChange'
 import { toggleDisplay } from '../utilities/toggleDisplay';
 // const { MonthPicker, RangePicker } = DatePicker;
@@ -24,8 +25,13 @@ const AddTask = props => {
   const handleSubmit = e => {
     e.preventDefault();
     console.log('Received values of AddTask Form: ', formInput);
-    setFormInput(initialState)
+    axiosWithAuth()
+      .post('/tasks', formInput)
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+
     toggleDisplay(e, addItemModal, setAddItemModal)
+    setFormInput(initialState)
   };
 
   const handleDateChange = e => {

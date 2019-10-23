@@ -65,7 +65,7 @@ export const retrieveTasks = () => dispatch => {
     .get('/tasks')
     .then(res => {
       dispatch({ type: GET_TASKS_SUCCESS, payload: res.data })
-      console.log(`aWA in retrieveTasks res.data`, res.data, `pl`, dispatch.payload)
+      console.log(`aWA in retrieveTasks res.data`, res.data)
     })
     .catch(err => dispatch({ type: GET_TASKS_FAILURE, payload: err }))
 }
@@ -77,6 +77,7 @@ export const addTask = task => dispatch => {
   axiosWithAuth()
     .post('/tasks', task)
     .then(res => {
+      console.log(`aWA in addTask action - task`, task, `res`, res)
       dispatch({ type: ADD_TASK_SUCCESS, payload: res.data })
     })
     .catch(err => dispatch({ type: ADD_TASK_FAILURE, payload: err }))
