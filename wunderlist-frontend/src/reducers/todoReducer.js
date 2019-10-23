@@ -6,6 +6,7 @@ const initialTodoState = {
   tasks: [],
   editing: {
     isEditing: false,
+    editSubmitErr: null,
     task: {
       completed: false,
       item: '',
@@ -54,7 +55,31 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
         editing: {
           ...state.editing,
           isEditing: action.payload.isEditing,
-          tasks: initialTodoState.tasks
+        }
+      }
+    case actionType.SUBMIT_EDIT_START:
+      return {
+        ...state,
+        editing: {
+          ...state.editing,
+          isEditing: true,
+        }
+      }
+    case actionType.SUBMIT_EDIT_SUCCESS:
+      return {
+        ...state,
+        editing: {
+          ...state.editing,
+          isEditing: false,
+        },
+        tasks: payload.newTaskList
+      }
+    case actionType.SUBMIT_EDIT_FAILURE:
+      return {
+        ...state,
+        editing: {
+          ...state.editing,
+          isEditing: true,
         }
       }
 

@@ -32,7 +32,7 @@ export const CANCEL_EDIT = 'CANCEL_EDIT';
 
 export const SUBMIT_EDIT_START = 'SUBMIT_EDIT_START';
 export const SUBMIT_EDIT_SUCCESS = 'SUBMIT_EDIT_SUCCESS'
-export const SUBMIT_EDIT_FAILED = 'SUBMIT_EDIT_FAILED';
+export const SUBMIT_EDIT_FAILURE = 'SUBMIT_EDIT_FAILURE';
 
 /*actions*/
 
@@ -87,8 +87,6 @@ export const addTask = task => dispatch => {
 }
 
 
-
-
 // Edit Task Actions
 export const selectEditTask = task => dispatch => {
   dispatch({ type: START_EDIT, payload: { isEditing: true, task } })
@@ -111,9 +109,20 @@ export const submitEditTask = (task, tasks) =>
         dispatch({ type: SUBMIT_EDIT_SUCCESS, payload: { isEditing: false, newTaskList } })
       )
       .catch(err =>
-        dispatch({ type: SUBMIT_EDIT_FAILED, payload: err })
+        dispatch({ type: SUBMIT_EDIT_FAILURE, payload: err })
       )
 
     console.log(`action submitEditTask task`, task)
   }
 
+export const deleteTask = (task, tasks) => dispatch => {
+  dispatch({ type: DELETE_TASK_START })
+  let newTaskList = tasks.filter(entry => entry.id !== task.id)
+  axiosWithAuth()
+    .delete(`/tasks/${task.id}`)
+    .then(res => {
+      dispatch({ type: DELETE_TASK_SUCCESS, payload: newTaskList })
+      console.log(`aWA delete response`, res)
+    })
+    .catch(err => dispatch({ type: DELETE_TASK_FAILURE, payload: err }))
+}
