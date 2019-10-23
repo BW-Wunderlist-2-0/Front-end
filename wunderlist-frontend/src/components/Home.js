@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import AddTask from './AddTask';
 import Task from './Task';
 import EditTask from './EditTask';
-import { cancelEditTask, retrieveTasks } from '../actions'
+import { toggleDisplay } from '../utilities/toggleDisplay';
+import { cancelEditTask, retrieveTasks } from '../actions';
 //Import ToDo component to map over component list
 // import TodoItem from './TodoItem';
 // Import SearchTasks component
@@ -35,10 +36,10 @@ const Home = props => {
     setShowMenu(!showMenu)
   }
 
-  const toggleDisplay = (e, display, displaySetter) => {
-    e.preventDefault();
-    displaySetter(!display)
-  }
+  // const toggleDisplay = (e, display, displaySetter) => {
+  //   e.preventDefault();
+  //   displaySetter(!display)
+  // }
 
   const hideEdit = e => {
     e.preventDefault();
