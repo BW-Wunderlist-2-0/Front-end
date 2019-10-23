@@ -46,8 +46,8 @@ export const retrieveTasks = () => dispatch => {
   axiosWithAuth()
     .get('/tasks')
     .then(res => {
-      console.log(`aWA in retrieveTasks res`, res, `res.data`, res.data)
       dispatch({ type: GET_TASKS_SUCCESS, payload: res.data })
+      console.log(`aWA in retrieveTasks res.data`, res.data, `pl`, dispatch.payload)
     })
     .catch(err => dispatch({ type: GET_TASKS_FAILURE, payload: err }))
 }

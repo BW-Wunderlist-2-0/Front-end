@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Drawer, Button, Icon, List, Modal } from 'antd';
 
 import { connect } from 'react-redux';
@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import AddTask from './AddTask';
 import Task from './Task';
 import EditTask from './EditTask';
-import { cancelEditTask } from '../actions'
+import { cancelEditTask, retrieveTasks } from '../actions'
 //Import ToDo component to map over component list
 // import TodoItem from './TodoItem';
 // Import SearchTasks component
@@ -17,12 +17,19 @@ import { cancelEditTask } from '../actions'
 const Home = props => {
   const [showMenu, setShowMenu] = useState(false)
   const [addItemModal, setAddItemModal] = useState(false)
+  // const [displayedTasks, setDisplayedTasks] = useState([])
 
+  useEffect(() => {
+    props.retrieveTasks()
+    console.log(`uE tasks`, props.tasks)
+    // setDisplayedTasks(props.tasks)
+    // console.log(`displayedTasks in Home`, displayedTasks);
+  }, []);
   console.log(`Home component props from mapStateToProps`, props)
-
   //uE to execute getData func
 
   //getData, executes aWa
+  props.tasks.forEach(entry => console.log(`props.tasks.fE entry`, entry))
 
   const toggleDrawer = () => {
     setShowMenu(!showMenu)
@@ -86,7 +93,7 @@ const Home = props => {
 const mapStateToProps = state => {
   console.log(`Home.js mSTP state`, state, `tasks`, state.todoReducer.tasks)
   return {
-    dataFetching: state.todoReducer.dataFetching,
+    dataFetching: state.todoReducer,
     tasks: state.todoReducer.tasks,
     edit: state.editReducer,
     activeUser: state.loginReducer.currentUser
@@ -94,4 +101,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { cancelEditTask })(Home);
+export default connect(mapStateToProps, { cancelEditTask, retrieveTasks })(Home);
