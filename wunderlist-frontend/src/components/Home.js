@@ -14,7 +14,6 @@ import { selectEditTask, cancelEditTask } from '../actions'
 // import AddTask component
 
 
-
 const Home = props => {
   const [showMenu, setShowMenu] = useState(false)
   const [addItemModal, setAddItemModal] = useState(false)
@@ -79,10 +78,6 @@ const Home = props => {
             <Task key={item.id} task={item} />
           )}
         </List>
-
-
-
-
       </div>
     </div>
   )

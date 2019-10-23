@@ -6,6 +6,7 @@ const initialState = {
     completed: false,
     item: '',
     dateCreated: null,
+    dateDue: null,
     recurring: false,
     recurringFrequency: ''
   }

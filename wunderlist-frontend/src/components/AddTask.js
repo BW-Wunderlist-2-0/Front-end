@@ -9,7 +9,7 @@ import { toggleDisplay } from '../utilities/toggleDisplay';
 const initialState = {
   completed: false,
   item: '',
-  dateCreated: '',
+  dateDue: null,
   recurring: false,
   recurringFrequency: 'Once'
 }
@@ -35,7 +35,7 @@ const AddTask = props => {
     setFormInput(
       {
         ...formInput,
-        dateCreated: formattedDate
+        dateDue: formattedDate
       }
     )
   }
@@ -61,7 +61,7 @@ const AddTask = props => {
           />
         </Form.Item>
         <Form.Item label='Due Date'>
-          <DatePicker name='dateCreated' showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} />
+          <DatePicker name='dateCreated' showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} placeholder={moment(Date.now()).format('MM-DD-YYYY, h:mm a')} />
         </Form.Item>
 
         <Form.Item>

@@ -4,28 +4,14 @@ import moment from 'moment';
 import { connect } from 'react-redux'
 
 import { handleFormChange } from '../utilities/handleFormChange'
-import { toggleDisplay } from '../utilities/toggleDisplay';
-// const { MonthPicker, RangePicker } = DatePicker;
-import { selectEditTask, cancelEditTask, submitEditTask } from '../actions'
+import { cancelEditTask, submitEditTask } from '../actions'
 
 
 
 
 const EditTask = props => {
-  // may need to set w/ useEffect
-  const initialState = {
-    completed: false,
-    item: '',
-    dateCreated: '',
-    recurring: false,
-    recurringFrequency: null
-  }
-
-
   const [formInput, setFormInput] = useState({})
-  const [addItemModal, setAddItemModal] = useState(props.edit.isEditing);
 
-  // const { addItemModal, setAddItemModal } = props;
   useEffect(() => {
     console.log(`useEffect props`, props)
     setFormInput(props.task)
@@ -37,8 +23,6 @@ const EditTask = props => {
     e.preventDefault();
     console.log('Received values of EditTask Form: ', formInput);
     props.submitEditTask(formInput)
-    // setFormInput(initialState)
-    // toggleDisplay(e, addItemModal, setAddItemModal)
   };
 
   const handleDateChange = e => {
@@ -74,7 +58,7 @@ const EditTask = props => {
           />
         </Form.Item>
         <Form.Item label='Due Date'>
-          <DatePicker name='dateCreated' showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} />
+          <DatePicker name='dateCreated' placeholder={props.task.dateDue} showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} />
         </Form.Item>
 
         <Form.Item>
