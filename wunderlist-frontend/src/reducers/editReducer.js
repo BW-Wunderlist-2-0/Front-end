@@ -1,13 +1,13 @@
 import * as actionType from '../actions';
 
 const initialState = {
-  isEditing: true,
+  isEditing: false,
   task: {
     completed: false,
-    item: 'Editing Item',
-    dateCreated: 1529644667834,
+    item: '',
+    dateCreated: null,
     recurring: false,
-    recurringFrequency: 'Once'
+    recurringFrequency: ''
   }
 }
 
@@ -21,7 +21,7 @@ const editReducer = (state = initialState, action = {}) => {
       }
     case actionType.FINISH_EDIT:
       return {
-        ...state,
+        ...initialState,
         isEditing: action.payload.isEditing,
 
       }

@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { List, Icon, Skeleton, Button } from 'antd';
+
+import { selectEditTask, cancelEditTask } from '../actions'
 
 const Task = props => {
 
@@ -9,7 +12,9 @@ const Task = props => {
 
   const editTask = e => {
     e.preventDefault();
-    console.log(props.task.id)
+    console.log(`props.task.id in editTask func in Task`, props.task.id)
+    console.log(`props.task in editTask func in Task`, props.task)
+    props.selectEditTask(props.task);
   }
 
 
@@ -27,5 +32,14 @@ const Task = props => {
 
   )
 }
+const mapStateToProps = state => {
+  console.log(`Home.js mSTP state`, state, `tasks`, state.todoReducer.tasks)
+  return {
 
-export default Task;
+    tasks: state.todoReducer.tasks,
+    edit: state.editReducer,
+
+  }
+}
+
+export default connect(mapStateToProps, { selectEditTask })(Task);

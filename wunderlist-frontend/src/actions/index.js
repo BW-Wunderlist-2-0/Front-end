@@ -46,7 +46,7 @@ export const selectEditTask = task => dispatch => {
 
 }
 export const cancelEditTask = task => dispatch => {
-  dispatch({ type: FINISH_EDIT, payload: { isEditing: false, task } })
+  dispatch({ type: FINISH_EDIT, payload: { isEditing: false } })
   console.log(`action selectEditTask task`, task);
 
 }
