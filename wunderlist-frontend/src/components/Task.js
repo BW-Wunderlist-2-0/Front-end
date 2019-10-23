@@ -17,12 +17,18 @@ const Task = props => {
     props.selectEditTask(props.task);
   }
 
+  const clickDelete = (e) => {
+    e.preventDefault();
+    console.log(`clickDelete activated on id`, props.task.id)
+    props.deleteTask(props.task, props.tasks)
+  }
+
 
   return (
     <>
 
       <List.Item
-        actions={[<a onClick={editTask}>edit</a>, <Icon type="close" />]}>
+        actions={[<a onClick={editTask}>edit</a>, <Icon type="close" onClick={clickDelete} />]}>
         <List.Item.Meta
           title={props.task.item}
         />

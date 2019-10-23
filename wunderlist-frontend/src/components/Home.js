@@ -7,7 +7,7 @@ import AddTask from './AddTask';
 import Task from './Task';
 import EditTask from './EditTask';
 import { toggleDisplay } from '../utilities/toggleDisplay';
-import { cancelEditTask, retrieveTasks } from '../actions';
+import { cancelEditTask, retrieveTasks, deleteTask } from '../actions';
 //Import ToDo component to map over component list
 // import TodoItem from './TodoItem';
 // Import SearchTasks component
@@ -83,7 +83,7 @@ const Home = props => {
       <div>
         <List itemLayout='horizontal'>
           {props.tasks.map(item =>
-            <Task key={item.id} task={item} />
+            <Task key={item.id} task={item} deleteTask={deleteTask} tasks={props.tasks} />
           )}
         </List>
       </div>
@@ -102,4 +102,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { cancelEditTask, retrieveTasks })(Home);
+export default connect(mapStateToProps, { cancelEditTask, retrieveTasks, deleteTask })(Home);

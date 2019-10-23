@@ -15,6 +15,11 @@ const initialTodoState = {
       recurring: false,
       recurringFrequency: ''
     }
+  },
+  deleting: {
+    isDeleting: false,
+    deleteErr: null,
+    task: {}
   }
 };
 
@@ -72,7 +77,7 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
           ...state.editing,
           isEditing: false,
         },
-        tasks: payload.newTaskList
+        tasks: action.payload.newTaskList
       }
     case actionType.SUBMIT_EDIT_FAILURE:
       return {
@@ -82,7 +87,32 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
           isEditing: true,
         }
       }
-
+    case actionType.DELETE_TASK_START:
+      return {
+        ...state,
+        deleting: {
+          ...state.deleting,
+          isDeleting: true,
+        }
+      }
+    case actionType.DELETE_TASK_SUCCESS:
+      return {
+        ...state,
+        tasks: action.payload.newTaskList,
+        deleting: {
+          ...state.deleting,
+          isDeleting: false,
+        }
+      }
+    case actionType.DELETE_TASK_FAILURE:
+      return {
+        ...state,
+        deleting: {
+          ...state.deleting,
+          isDeleting: false,
+          deleteErr: action.payload
+        }
+      }
     default:
       return state;
   }
