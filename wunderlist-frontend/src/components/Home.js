@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Drawer, Button, Icon, List, Modal } from 'antd';
 
 import { connect } from 'react-redux';
@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import AddTask from './AddTask';
 import Task from './Task';
 import EditTask from './EditTask';
-import { selectEditTask, cancelEditTask } from '../actions'
+import { cancelEditTask } from '../actions'
 //Import ToDo component to map over component list
 // import TodoItem from './TodoItem';
 // Import SearchTasks component
@@ -70,10 +70,7 @@ const Home = props => {
         <EditTask />
       </Modal>
       <div>
-        <List
-          itemLayout='horizontal'
-        >
-
+        <List itemLayout='horizontal'>
           {props.tasks.map(item =>
             <Task key={item.id} task={item} />
           )}

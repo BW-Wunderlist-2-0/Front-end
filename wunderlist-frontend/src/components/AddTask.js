@@ -25,7 +25,6 @@ const AddTask = props => {
     e.preventDefault();
     console.log('Received values of AddTask Form: ', formInput);
     setFormInput(initialState)
-
     toggleDisplay(e, addItemModal, setAddItemModal)
   };
 

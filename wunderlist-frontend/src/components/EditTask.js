@@ -31,7 +31,7 @@ const EditTask = props => {
     setFormInput(
       {
         ...formInput,
-        dateCreated: formattedDate
+        dateDue: formattedDate
       }
     )
   }
@@ -58,7 +58,7 @@ const EditTask = props => {
           />
         </Form.Item>
         <Form.Item label='Due Date'>
-          <DatePicker name='dateCreated' placeholder={props.task.dateDue} showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} />
+          <DatePicker name='dateCreated' placeholder={moment(Date.now()).format('MM-DD-YYYY, h:mm a')} showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} />
         </Form.Item>
 
         <Form.Item>
