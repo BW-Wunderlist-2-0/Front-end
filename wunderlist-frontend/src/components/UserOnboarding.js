@@ -18,7 +18,7 @@ const UserOnboarding = props => {
     submitRegistration(formInput)
     console.log('Received values of form: ', formInput);
     //migrate this to submitRegistration vv
-    props.history.push('/')
+    props.history.push('/login')
   };
 
   console.log(`UserOnboarding props`, props);
@@ -27,8 +27,8 @@ const UserOnboarding = props => {
 
   return (
     <>
-      <h3>User Onboarding</h3>
-      <Form layout="inline" onSubmit={handleSubmit}>
+      <h2>Create User</h2>
+      <Form layout="vertical" onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', justifyItems: 'center', alignItems: 'center' }}>
         <Form.Item >
 
           <Input

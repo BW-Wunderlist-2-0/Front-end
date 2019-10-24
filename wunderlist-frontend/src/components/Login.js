@@ -16,23 +16,7 @@ const Login = props => {
   })
 
   const dispatch = useDispatch();
-  // const loginState = useSelector(state => state.loginReducer);
-  // console.log(`props.form`, getFieldDecorator, getFieldsError, getFieldError, isFieldTouched)
-  // const handleChange = e => {
 
-  //   setFormInput({
-  //     ...formInput,
-  //     [e.target.name]: e.target.value,
-  //   })
-  // }
-
-  // const handleChange = (e, formState, formStateSetter) => {
-
-  //   formStateSetter({
-  //     ...formState,
-  //     [e.target.name]: e.target.value
-  //   });
-  // }
 
   const login = credentials => {
     dispatch({ type: `LOGIN_REQUEST` })
@@ -56,20 +40,13 @@ const Login = props => {
   const handleSubmit = e => {
     e.preventDefault();
     login(formInput)
-    // login({
-    //   username: values.username,
-    //   password: values.password
-    // })
-
     console.log('Logging in with received values of form: ', formInput);
-
   };
 
-  // colors subject to change as styling improves.
   return (
     <>
-      <h1> Login Component</h1>
-      <Form layout="inline" onSubmit={handleSubmit}>
+      <h2>Login</h2>
+      <Form layout="vertical" onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', justifyItems: 'center', alignItems: 'center' }}>
         <Form.Item >
           <Input
             prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
