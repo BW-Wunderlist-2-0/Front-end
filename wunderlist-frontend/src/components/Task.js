@@ -8,23 +8,28 @@ import { axiosWithAuth } from '../utilities/axiosWithAuth';
 const Task = props => {
   const { task } = props
   const tasks = useSelector(state => state.todoReducer.tasks)
-
+  console.log(`task, task and tasks`, task, tasks)
 
   const dispatch = useDispatch();
   // when clicked on expands to Modal? with more information
   // try containing the Modal in this component
 
-  const toggleCompleted = (task, tasks) => {
+  const toggleCompleted = e => {
     // dispatch({ type: `SET_TASK_COMPLETE`, payload: task.id })
-
-    dispatch({ type: `SUBMIT_EDIT_START` })
-    // API cal to update
+    e.preventDefault();
+    e.stopPropagation();
 
     let newTaskList = tasks.map(entry => entry.id === task.id ? { ...entry, completed: !entry.completed } : entry)
+    console.log(`toggleCompleted in Task.js`, task, newTaskList)
+    // API cal to update
+
     axiosWithAuth()
       .put(`/tasks/${task.id}`, task)
-      .then(
-        dispatch({ type: `SUBMIT_EDIT_SUCCESS`, payload: { isEditing: false, newTaskList } })
+      .then(res => {
+        console.log(`aWA in toggleCompleted`, res.data)
+        dispatch({ type: `SET_TASK_COMPLETE`, payload: newTaskList })
+      }
+        // dispatch({ type: `SUBMIT_EDIT_SUCCESS`, payload: { isEditing: false, newTaskList } })
       )
       .catch(err =>
         dispatch({ type: `SUBMIT_EDIT_FAILURE`, payload: err })

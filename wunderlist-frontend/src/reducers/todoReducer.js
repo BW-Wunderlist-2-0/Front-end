@@ -85,7 +85,7 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
         ...state,
         editing: {
           ...state.editing,
-          isEditing: true,
+          isEditing: false,
         }
       }
     case actionType.DELETE_TASK_START:
@@ -113,6 +113,11 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
           isDeleting: false,
           deleteErr: action.payload
         }
+      }
+    case actionType.SET_TASK_COMPLETED:
+      return {
+        ...state,
+        tasks: action.payload
       }
 
     default:

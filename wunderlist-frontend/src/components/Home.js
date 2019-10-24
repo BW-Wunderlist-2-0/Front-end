@@ -64,7 +64,7 @@ const Home = props => {
   //uE to execute getData func
 
   //getData, executes aWa
-  tasks.forEach(entry => console.log(`tasks.forEeach entry`, entry))
+
 
   const toggleDrawer = () => {
     setShowMenu(!showMenu)

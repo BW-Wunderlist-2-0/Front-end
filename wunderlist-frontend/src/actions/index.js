@@ -38,7 +38,8 @@ export const SEARCH = 'SEARCH';
 export const SET_TIMELINE_FILTER = 'SET_TIMELINE_FILTER';
 export const FILTER_BY_COMPLETION = 'FILTER_BY_COMPLETION';
 
-export const SET_TASK_COMPLETE = `SET_TASK_COMPLETE`;
+export const SET_TASK_COMPLETED = `SET_TASK_COMPLETED`;
+
 
 /*actions*/
 
