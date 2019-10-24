@@ -5,7 +5,7 @@ import { Input } from 'antd';
 
 const Search = () => {
   const dispatch = useDispatch();
-  const searchTerm = useSelector(state => state.ui.searchTerm)
+  // const searchTerm = useSelector(state => state.ui.searchTerm)
 
   // const handleSubmit = e => {
   //   e.preventDefault();

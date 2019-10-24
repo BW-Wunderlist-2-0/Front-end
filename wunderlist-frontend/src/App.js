@@ -1,11 +1,11 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Spin } from 'antd';
 
 
-import Login from './components/Login';
 import { browserHistory } from './'
+import Login from './components/Login';
 import Home from './components/Home';
 import PrivateRoute from './components/PrivateRoute';
 import Navigation from './components/Navigation';
@@ -13,7 +13,9 @@ import WrappedOnboardingForm from './components/UserOnboarding';
 
 
 function App(props) {
-  const { isAuthenticating, currentUser, errorMessage } = props.login
+  const login = useSelector(state => state.loginReducer)
+
+  const { isAuthenticating, currentUser, errorMessage } = login
 
 
   return (
@@ -36,14 +38,4 @@ function App(props) {
   );
 }
 
-const mapStateToProps = state => {
-  console.log(`props in mSTP in App.js`, state)
-  return {
-    login: state.loginReducer
-  }
-}
-
-
-
-
-export default connect(mapStateToProps, {})(App);
+export default App;

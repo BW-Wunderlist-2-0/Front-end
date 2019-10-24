@@ -52,7 +52,6 @@ export const login = credentials => dispatch => {
       dispatch({ type: LOGIN_SUCCESS, user: jwtDecode(res.data.token) })
       localStorage.setItem('token', res.data.token)
       browserHistory.push('/home')
-      browserHistory.push('/home')
     })
     .catch(err => {
       console.log(err)
@@ -66,29 +65,17 @@ const logout = task => {
 }
 
 // GET tasks
-export const retrieveTasks = () => dispatch => {
-  dispatch({ type: GET_TASKS_START })
-  axiosWithAuth()
-    .get('/tasks')
-    .then(res => {
-      dispatch({ type: GET_TASKS_SUCCESS, payload: res.data })
-      console.log(`aWA in retrieveTasks res.data`, res.data)
-    })
-    .catch(err => dispatch({ type: GET_TASKS_FAILURE, payload: err }))
-}
+// export const retrieveTasks = () => dispatch => {
+//   dispatch({ type: GET_TASKS_START })
+//   axiosWithAuth()
+//     .get('/tasks')
+//     .then(res => {
+//       dispatch({ type: GET_TASKS_SUCCESS, payload: res.data })
+//       console.log(`aWA in retrieveTasks res.data`, res.data)
+//     })
+//     .catch(err => dispatch({ type: GET_TASKS_FAILURE, payload: err }))
+// }
 
-// ADD TASK
-
-export const addTask = task => dispatch => {
-  dispatch({ type: ADD_TASK_START })
-  axiosWithAuth()
-    .post('/tasks', task)
-    .then(res => {
-      console.log(`aWA in addTask action - task`, task, `res`, res)
-      dispatch({ type: ADD_TASK_SUCCESS, payload: res.data })
-    })
-    .catch(err => dispatch({ type: ADD_TASK_FAILURE, payload: err }))
-}
 
 
 // Edit Task Actions
@@ -97,27 +84,13 @@ export const selectEditTask = task => dispatch => {
   console.log(`action selectEditTask task`, task);
 
 }
-export const cancelEditTask = task => dispatch => {
-  dispatch({ type: CANCEL_EDIT, payload: { isEditing: false } })
-  console.log(`action cancelEditTask task`, task);
-}
 
-export const submitEditTask = (task, tasks) =>
-  dispatch => {
-    dispatch({ type: SUBMIT_EDIT_START })
-    // API cal to update
-    let newTaskList = tasks.filter(entry => entry.id !== task.id)
-    axiosWithAuth()
-      .put(`/tasks/${task.id}`, task)
-      .then(
-        dispatch({ type: SUBMIT_EDIT_SUCCESS, payload: { isEditing: false, newTaskList } })
-      )
-      .catch(err =>
-        dispatch({ type: SUBMIT_EDIT_FAILURE, payload: err })
-      )
+// export const cancelEditTask = task => dispatch => {
+//   dispatch({ type: CANCEL_EDIT, payload: { isEditing: false } })
+//   console.log(`action cancelEditTask task`, task);
+// }
 
-    console.log(`action submitEditTask task`, task)
-  }
+
 
 export const deleteTask = (task, tasks) => dispatch => {
   dispatch({ type: DELETE_TASK_START })

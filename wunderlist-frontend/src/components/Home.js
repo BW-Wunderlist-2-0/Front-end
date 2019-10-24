@@ -1,39 +1,73 @@
 import React, { useState, useEffect } from 'react';
-import { Drawer, Button, Icon, List, Modal } from 'antd';
+import { Drawer, Button, Icon, List, Modal, Switch } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
+import { axiosWithAuth } from '../utilities/axiosWithAuth';
+import { deleteTask } from '../actions';
+import { toggleDisplay } from '../utilities/toggleDisplay';
 import AddTask from './AddTask';
 import Task from './Task';
 import EditTask from './EditTask';
-import { toggleDisplay } from '../utilities/toggleDisplay';
-import { cancelEditTask, retrieveTasks, deleteTask } from '../actions';
+import Search from './Search';
+
+
+
 //Import ToDo component to map over component list
 // import TodoItem from './TodoItem';
 // Import SearchTasks component
 // import EditTask component
 // import AddTask component
 
+// dataFetching: state.todoReducer,
+// tasks: state.todoReducer.tasks,
+// edit: state.todoReducer.editing,
+// activeUser: state.loginReducer.currentUser
 
 const Home = props => {
+  // const { cancelEditTask, retrieveTasks, deleteTask } = props
+  const dispatch = useDispatch();
+  const dataFetching = useSelector(state => state.todoReducer);
+  const tasks = useSelector(state => state.todoReducer.tasks);
+  const edit = useSelector(state => state.todoReducer.editing);
+  const activeUser = useSelector(state => state.loginReducer.currentUser)
+
   const [showMenu, setShowMenu] = useState(false)
   const [addItemModal, setAddItemModal] = useState(false)
   // const [displayedTasks, setDisplayedTasks] = useState([])
 
+  const retrieveTasks = () => {
+    dispatch({ type: 'GET_TASKS_START' })
+    axiosWithAuth()
+      .get('/tasks')
+      .then(res => {
+        dispatch({ type: 'GET_TASKS_SUCCESS', payload: res.data })
+        console.log(`aWA in retrieveTasks res.data`, res.data)
+      })
+      .catch(err => dispatch({ type: 'GET_TASKS_FAILURE', payload: err }))
+  }
+
+
+
   useEffect(() => {
-    props.retrieveTasks()
-    console.log(`uE tasks`, props.tasks)
+    retrieveTasks()
+    console.log(`useEffect tasks`, tasks)
     // setDisplayedTasks(props.tasks)
     // console.log(`displayedTasks in Home`, displayedTasks);
   }, []);
-  console.log(`Home component props from mapStateToProps`, props)
+  // console.log(`Home component props from mapStateToProps`, props)
   //uE to execute getData func
 
   //getData, executes aWa
-  props.tasks.forEach(entry => console.log(`props.tasks.fE entry`, entry))
+  tasks.forEach(entry => console.log(`tasks.forEeach entry`, entry))
 
   const toggleDrawer = () => {
     setShowMenu(!showMenu)
+  }
+
+  const switchChange = checked => {
+
   }
 
   // const toggleDisplay = (e, display, displaySetter) => {
@@ -43,7 +77,7 @@ const Home = props => {
 
   const hideEdit = e => {
     e.preventDefault();
-    props.cancelEditTask();
+    dispatch({ type: `CANCEL_EDIT`, payload: { isEditing: false } })
   }
 
   return (
@@ -51,16 +85,21 @@ const Home = props => {
       <h1>Home Component</h1>
       <Button onClick={toggleDrawer}>Show Menu</Button>
       <Button onClick={e => toggleDisplay(e, addItemModal, setAddItemModal)}>Add Task</Button>
+      {/* <Search /> */}
+
       {/* {props.activeUser.username && <h4>Hello, {props.activeUser.username}</h4>} */}
-      {showMenu
-        &&
-        <Drawer
-          title='Options'
-          placement='left'
-          closable={true}
-          onClose={toggleDrawer}
-          visible={showMenu}
-        />}
+
+      <Drawer
+        title='Options'
+        placement='left'
+        closable={true}
+        onClose={toggleDrawer}
+        visible={showMenu}>
+
+        <h3>View Options</h3>
+        <span><Switch onChange={switchChange} /><p>Show Completed</p></span>
+
+      </Drawer>
       <Modal
         title='Add Task'
         visible={addItemModal}
@@ -74,7 +113,7 @@ const Home = props => {
 
       <Modal
         title='Edit Task'
-        visible={props.edit.isEditing}
+        visible={edit.isEditing}
         footer={false}
         onCancel={hideEdit}
       >
@@ -82,8 +121,8 @@ const Home = props => {
       </Modal>
       <div>
         <List itemLayout='horizontal'>
-          {props.tasks.map(item =>
-            <Task key={item.id} task={item} deleteTask={deleteTask} tasks={props.tasks} />
+          {tasks.map(item =>
+            <Task key={item.id} task={item} deleteTask={deleteTask} tasks={tasks} />
           )}
         </List>
       </div>
@@ -91,15 +130,15 @@ const Home = props => {
   )
 }
 
-const mapStateToProps = state => {
-  console.log(`Home.js mSTP state`, state, `tasks`, state.todoReducer.tasks)
-  return {
-    dataFetching: state.todoReducer,
-    tasks: state.todoReducer.tasks,
-    edit: state.todoReducer.editing,
-    activeUser: state.loginReducer.currentUser
+// const mapStateToProps = state => {
+//   console.log(`Home.js mSTP state`, state, `tasks`, state.todoReducer.tasks)
+//   return {
+//     dataFetching: state.todoReducer,
+//     tasks: state.todoReducer.tasks,
+//     edit: state.todoReducer.editing,
+//     activeUser: state.loginReducer.currentUser
 
-  }
-}
+//   }
+// }
 
-export default connect(mapStateToProps, { cancelEditTask, retrieveTasks, deleteTask })(Home);
+export default Home;

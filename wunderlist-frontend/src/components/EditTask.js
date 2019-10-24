@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Icon, DatePicker, Radio, Button } from 'antd'
 import moment from 'moment';
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 
+
+import { axiosWithAuth } from '../utilities/axiosWithAuth';
 import { handleFormChange } from '../utilities/handleFormChange'
-import { cancelEditTask, submitEditTask } from '../actions'
+
+
 
 
 
@@ -12,18 +15,23 @@ import { cancelEditTask, submitEditTask } from '../actions'
 const EditTask = props => {
   const [formInput, setFormInput] = useState({})
 
+  const edit = useSelector(state => state.todoReducer.editing);
+  const task = useSelector(state => state.todoReducer.editing.task);
+  const tasks = useSelector(state => state.todoReducer.tasks)
+  const dispatch = useDispatch();
+
   useEffect(() => {
     console.log(`useEffect props`, props)
-    setFormInput(props.task)
+    setFormInput(task)
     console.log(`uE formInput`, formInput)
-  }, [props.task])
+  }, [task])
 
 
   const handleSubmit = e => {
     e.preventDefault();
     console.log('Received values of EditTask Form: ', formInput);
     //signal edit submit action here
-    submitEditTask(formInput, props.tasks)
+    submitEditTask(formInput, tasks)
   };
 
   const handleDateChange = e => {
@@ -44,47 +52,58 @@ const EditTask = props => {
     })
   }
 
+  const cancelEditTask = task => {
+    dispatch({ type: `CANCEL_EDIT`, payload: { isEditing: false } })
+    console.log(`action cancelEditTask task`, task);
+  }
 
-  console.log(`editTask formInput`, formInput)
+  const submitEditTask = (task, tasks) => {
+    dispatch({ type: `SUBMIT_EDIT_START` })
+    // API cal to update
+    let newTaskList = tasks.filter(entry => entry.id !== task.id)
+    axiosWithAuth()
+      .put(`/tasks/${task.id}`, task)
+      .then(
+        dispatch({ type: `SUBMIT_EDIT_SUCCESS`, payload: { isEditing: false, newTaskList } })
+      )
+      .catch(err =>
+        dispatch({ type: `SUBMIT_EDIT_FAILURE`, payload: err })
+      )
 
-  return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <Form.Item label='Task Name'>
-          <Input
-            type='text'
-            name='item'
-            value={props.task.item}
-            onChange={e => handleFormChange(e, formInput, setFormInput)}
-          />
-        </Form.Item>
-        <Form.Item label='Due Date'>
-          <DatePicker name='dateCreated' placeholder={moment(Date.now()).format('MM-DD-YYYY, h:mm a')} showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} />
-        </Form.Item>
 
-        <Form.Item>
-          <Radio.Group value={props.task.recurringFrequency} onChange={handleRadioChange}>
-            <Radio value='once'>Once</Radio>
-            <Radio value='daily'>Daily</Radio>
-            <Radio value='weekly'>Weekly</Radio>
-            <Radio value='monthly'>Monthly</Radio>
-          </Radio.Group >
-        </Form.Item>
+    console.log(`editTask formInput`, formInput)
 
-        <Button type="primary" htmlType="submit">Submit</Button>
-      </Form>
+    return (
+      <>
+        <Form onSubmit={handleSubmit}>
+          <Form.Item label='Task Name'>
+            <Input
+              type='text'
+              name='item'
+              value={task.item}
+              onChange={e => handleFormChange(e, formInput, setFormInput)}
+            />
+          </Form.Item>
+          <Form.Item label='Due Date'>
+            <DatePicker name='dateCreated' placeholder={moment(Date.now()).format('MM-DD-YYYY, h:mm a')} showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} />
+          </Form.Item>
 
-    </>
-  )
-}
+          <Form.Item>
+            <Radio.Group value={task.recurringFrequency} onChange={handleRadioChange}>
+              <Radio value='once'>Once</Radio>
+              <Radio value='daily'>Daily</Radio>
+              <Radio value='weekly'>Weekly</Radio>
+              <Radio value='monthly'>Monthly</Radio>
+            </Radio.Group >
+          </Form.Item>
 
-const mapStateToProps = state => {
-  console.log(`EditTask mSTP state`, state)
-  return {
-    edit: state.todoReducer.editing,
-    task: state.todoReducer.editing.task,
-    tasks: state.todoReducer.tasks
+          <Button type="primary" htmlType="submit">Submit</Button>
+        </Form>
+
+      </>
+    )
   }
 }
 
-export default connect(mapStateToProps, { cancelEditTask, submitEditTask })(EditTask);
+
+export default EditTask
