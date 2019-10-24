@@ -11,17 +11,14 @@ const Task = props => {
   console.log(`task, task and tasks`, task, tasks)
 
   const dispatch = useDispatch();
-  // when clicked on expands to Modal? with more information
-  // try containing the Modal in this component
+
 
   const toggleCompleted = e => {
-    // dispatch({ type: `SET_TASK_COMPLETE`, payload: task.id })
     e.preventDefault();
     e.stopPropagation();
 
     let newTaskList = tasks.map(entry => entry.id === task.id ? { ...entry, completed: !entry.completed } : entry)
     console.log(`toggleCompleted in Task.js`, task, newTaskList)
-    // API cal to update
 
     axiosWithAuth()
       .put(`/tasks/${task.id}`, task)
@@ -29,7 +26,7 @@ const Task = props => {
         console.log(`aWA in toggleCompleted`, res.data)
         dispatch({ type: `SET_TASK_COMPLETE`, payload: newTaskList })
       }
-        // dispatch({ type: `SUBMIT_EDIT_SUCCESS`, payload: { isEditing: false, newTaskList } })
+
       )
       .catch(err =>
         dispatch({ type: `SUBMIT_EDIT_FAILURE`, payload: err })

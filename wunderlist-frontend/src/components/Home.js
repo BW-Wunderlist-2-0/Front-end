@@ -14,19 +14,10 @@ import Search from './Search';
 import FilterLink from './FilterLink';
 import { displayGivenTimeline } from '../utilities/displayGivenTimeline';
 
-//Import ToDo component to map over component list
-// import TodoItem from './TodoItem';
-// Import SearchTasks component
-// import EditTask component
-// import AddTask component
 
-// dataFetching: state.todoReducer,
-// tasks: state.todoReducer.tasks,
-// edit: state.todoReducer.editing,
-// activeUser: state.loginReducer.currentUser
 
 const Home = props => {
-  // const { cancelEditTask, retrieveTasks, deleteTask } = props
+
   const dispatch = useDispatch();
   const dataFetching = useSelector(state => state.todoReducer);
   const tasks = useSelector(state => state.todoReducer.tasks);
@@ -36,7 +27,7 @@ const Home = props => {
 
   const [showMenu, setShowMenu] = useState(false)
   const [addItemModal, setAddItemModal] = useState(false)
-  // const [displayedTasks, setDisplayedTasks] = useState([])
+
 
   const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime)
 
@@ -57,13 +48,8 @@ const Home = props => {
   useEffect(() => {
     retrieveTasks()
     console.log(`useEffect tasks`, tasks)
-    // setDisplayedTasks(props.tasks)
-    // console.log(`displayedTasks in Home`, displayedTasks);
   }, []);
-  // console.log(`Home component props from mapStateToProps`, props)
-  //uE to execute getData func
 
-  //getData, executes aWa
 
 
   const toggleDrawer = () => {
@@ -73,11 +59,6 @@ const Home = props => {
   const switchChange = checked => {
     dispatch({ type: `SET_VISIBILITY_FILTER`, })
   }
-
-  // const toggleDisplay = (e, display, displaySetter) => {
-  //   e.preventDefault();
-  //   displaySetter(!display)
-  // }
 
   const hideEdit = e => {
     e.preventDefault();
@@ -91,7 +72,6 @@ const Home = props => {
       <Button onClick={e => toggleDisplay(e, addItemModal, setAddItemModal)}>Add Task</Button>
       {/* <Search /> */}
 
-      {/* {props.activeUser.username && <h4>Hello, {props.activeUser.username}</h4>} */}
 
       <Drawer
         title='View Options'
@@ -140,15 +120,6 @@ const Home = props => {
   )
 }
 
-// const mapStateToProps = state => {
-//   console.log(`Home.js mSTP state`, state, `tasks`, state.todoReducer.tasks)
-//   return {
-//     dataFetching: state.todoReducer,
-//     tasks: state.todoReducer.tasks,
-//     edit: state.todoReducer.editing,
-//     activeUser: state.loginReducer.currentUser
 
-//   }
-// }
 
 export default Home;

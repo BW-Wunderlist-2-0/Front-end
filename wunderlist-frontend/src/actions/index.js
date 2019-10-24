@@ -67,17 +67,7 @@ const logout = task => {
   return { type: LOGOUT, payload: { isEditing: false, task } }
 }
 
-// GET tasks
-// export const retrieveTasks = () => dispatch => {
-//   dispatch({ type: GET_TASKS_START })
-//   axiosWithAuth()
-//     .get('/tasks')
-//     .then(res => {
-//       dispatch({ type: GET_TASKS_SUCCESS, payload: res.data })
-//       console.log(`aWA in retrieveTasks res.data`, res.data)
-//     })
-//     .catch(err => dispatch({ type: GET_TASKS_FAILURE, payload: err }))
-// }
+
 
 
 
@@ -85,13 +75,7 @@ const logout = task => {
 export const selectEditTask = task => dispatch => {
   dispatch({ type: START_EDIT, payload: { isEditing: true, task } })
   console.log(`action selectEditTask task`, task);
-
 }
-
-// export const cancelEditTask = task => dispatch => {
-//   dispatch({ type: CANCEL_EDIT, payload: { isEditing: false } })
-//   console.log(`action cancelEditTask task`, task);
-// }
 
 
 
@@ -111,9 +95,7 @@ export const search = value => dispatch => {
   dispatch({ type: SEARCH, value })
 }
 
-// export const filterByTime = value => dispatch => {
-//   dispatch({ type: FILTER_BY_TIME, payload: value })
-// }
+
 
 export const filterByCompletion = () => dispatch => {
   dispatch({ type: FILTER_BY_COMPLETION })
