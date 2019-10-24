@@ -7,33 +7,37 @@ import { useSelector, useDispatch } from 'react-redux';
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
 import { deleteTask } from '../actions';
 import { toggleDisplay } from '../utilities/toggleDisplay';
+import { displayGivenTimeline } from '../utilities/displayGivenTimeline';
+import { toggleShowCompleted } from '../utilities/toggleShowCompleted';
+
 import AddTask from './AddTask';
 import Task from './Task';
 import EditTask from './EditTask';
 import Search from './Search';
 import FilterLink from './FilterLink';
-import { displayGivenTimeline } from '../utilities/displayGivenTimeline';
 
 
 
 const Home = props => {
 
   const dispatch = useDispatch();
-  const dataFetching = useSelector(state => state.todoReducer);
+  // const dataFetching = useSelector(state => state.todoReducer);
   const tasks = useSelector(state => state.todoReducer.tasks);
   const edit = useSelector(state => state.todoReducer.editing);
-  const activeUser = useSelector(state => state.loginReducer.currentUser)
-  const filterByTime = useSelector(state => state.uiReducer.filterByTime)
+  // const activeUser = useSelector(state => state.loginReducer.currentUser)
+  const uiFilters = useSelector(state => state.uiReducer)
 
+  const { filterByTime, showCompleted } = uiFilters
   const [displayedTasks, setDisplayedTasks] = useState(tasks)
   const [showMenu, setShowMenu] = useState(false)
   const [addItemModal, setAddItemModal] = useState(false)
 
 
-  const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime)
 
+  const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime);
+  const tasksFilteredByCompletion = toggleShowCompleted(tasksFilteredByTimeline);
   // apply view settings to local state
-
+  setDisplayedTasks(tasksFilteredByCompletion);
 
   const retrieveTasks = () => {
     dispatch({ type: 'GET_TASKS_START' })
