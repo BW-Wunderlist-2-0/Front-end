@@ -46,23 +46,7 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
         isLoading: false,
         error: action.payload
       };
-    case actionType.START_EDIT:
-      return {
-        ...state,
-        editing: {
-          ...state.editing,
-          isEditing: true,
-          task: action.payload.task
-        }
-      }
-    case actionType.CANCEL_EDIT:
-      return {
-        ...state,
-        editing: {
-          ...state.editing,
-          isEditing: action.payload.isEditing,
-        }
-      }
+
     case actionType.SUBMIT_EDIT_START:
       return {
         ...state,
@@ -125,12 +109,6 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
   }
 }
 
-// export const editReducer = (state = initialState, action = {}) => {
-//   switch (action.type) {
 
-//     default:
-//       return state;
-//   }
-// }
 
 export default todoReducer;

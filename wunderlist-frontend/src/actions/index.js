@@ -26,9 +26,10 @@ export const DELETE_TASK_START = "DELETE_TASK_START";
 export const DELETE_TASK_SUCCESS = "DELETE_TASK_SUCCESS";
 export const DELETE_TASK_FAILURE = "DELETE_TASK_FAILURE";
 
+// Task Adding
+export const TOGGLE_ADD_ITEM = 'TOGGLE_ADD_ITEM';
 // Task Editing
-export const START_EDIT = 'START_EDIT';
-export const CANCEL_EDIT = 'CANCEL_EDIT';
+export const TOGGLE_MENU = 'TOGGLE_MENU';
 
 export const SUBMIT_EDIT_START = 'SUBMIT_EDIT_START';
 export const SUBMIT_EDIT_SUCCESS = 'SUBMIT_EDIT_SUCCESS'

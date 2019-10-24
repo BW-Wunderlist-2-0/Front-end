@@ -15,7 +15,7 @@ import WrappedOnboardingForm from './components/UserOnboarding';
 
 function App(props) {
   const login = useSelector(state => state.loginReducer)
-  const { Header, Footer, Sider, Content } = Layout;
+  const { Footer, Content } = Layout;
 
   const { isAuthenticating, currentUser, errorMessage } = login
 
@@ -39,8 +39,7 @@ function App(props) {
             <Col xs={20} sm={18} md={16} lg={14} xl={12} style={{ margin: '1rem', padding: '1rem', }}>
               <Switch>
                 <Route path='/signup' component={WrappedOnboardingForm} />
-                {/* PrivateRoute temporarily disabled, home component renderred in route */}
-                {/* <Route path='/home' component={Home} /> */}
+
                 <PrivateRoute path='/home' component={Home} />
                 <Route path='/home' component={Home} />
                 <Route exact path='/login' component={Login} />
