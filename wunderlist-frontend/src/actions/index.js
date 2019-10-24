@@ -35,7 +35,7 @@ export const SUBMIT_EDIT_SUCCESS = 'SUBMIT_EDIT_SUCCESS'
 export const SUBMIT_EDIT_FAILURE = 'SUBMIT_EDIT_FAILURE';
 
 export const SEARCH = 'SEARCH';
-export const FILTER_BY_TIME = 'FILTER_BY_TIME';
+export const SET_TIMELINE_FILTER = 'SET_TIMELINE_FILTER';
 export const FILTER_BY_COMPLETION = 'FILTER_BY_COMPLETION';
 
 /*actions*/
@@ -108,9 +108,9 @@ export const search = value => dispatch => {
   dispatch({ type: SEARCH, value })
 }
 
-export const filterByTime = value => dispatch => {
-  dispatch({ type: FILTER_BY_TIME, payload: value })
-}
+// export const filterByTime = value => dispatch => {
+//   dispatch({ type: FILTER_BY_TIME, payload: value })
+// }
 
 export const filterByCompletion = () => dispatch => {
   dispatch({ type: FILTER_BY_COMPLETION })

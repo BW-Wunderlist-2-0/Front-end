@@ -11,8 +11,8 @@ import AddTask from './AddTask';
 import Task from './Task';
 import EditTask from './EditTask';
 import Search from './Search';
-
-
+import FilterLink from './FilterLink';
+import { displayGivenTimeline } from '../utilities/displayGivenTimeline';
 
 //Import ToDo component to map over component list
 // import TodoItem from './TodoItem';
@@ -32,10 +32,14 @@ const Home = props => {
   const tasks = useSelector(state => state.todoReducer.tasks);
   const edit = useSelector(state => state.todoReducer.editing);
   const activeUser = useSelector(state => state.loginReducer.currentUser)
+  const filterByTime = useSelector(state => state.uiReducer.filterByTime)
 
   const [showMenu, setShowMenu] = useState(false)
   const [addItemModal, setAddItemModal] = useState(false)
   // const [displayedTasks, setDisplayedTasks] = useState([])
+
+  const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime)
+
 
   const retrieveTasks = () => {
     dispatch({ type: 'GET_TASKS_START' })
@@ -67,7 +71,7 @@ const Home = props => {
   }
 
   const switchChange = checked => {
-
+    dispatch({ type: `SET_VISIBILITY_FILTER`, })
   }
 
   // const toggleDisplay = (e, display, displaySetter) => {
@@ -90,16 +94,22 @@ const Home = props => {
       {/* {props.activeUser.username && <h4>Hello, {props.activeUser.username}</h4>} */}
 
       <Drawer
-        title='Options'
+        title='View Options'
         placement='left'
         closable={true}
         onClose={toggleDrawer}
         visible={showMenu}>
 
-        <h3>View Options</h3>
-        <span><Switch onChange={switchChange} /><p>Show Completed</p></span>
 
-      </Drawer>
+        <span><Switch onChange={switchChange} /><p>Show Completed</p></span>
+        <h3>Display</h3>
+        <div>
+          {''}
+          <FilterLink filter='SHOW_DAY' currentFilter={filterByTime}> Today</FilterLink>
+          <FilterLink filter='SHOW_SEVEN_DAYS' currentFilter={filterByTime}> Next 7 Days</FilterLink>
+          <FilterLink filter='SHOW_THIRTY_DAYS' currentFilter={filterByTime}> Next 30 Days</FilterLink>
+        </div >
+      </Drawer >
       <Modal
         title='Add Task'
         visible={addItemModal}
@@ -126,7 +136,7 @@ const Home = props => {
           )}
         </List>
       </div>
-    </div>
+    </div >
   )
 }
 
