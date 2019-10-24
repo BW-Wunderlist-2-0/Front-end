@@ -19,7 +19,7 @@ const Navigation = () => {
 
   return (
     <div >
-      <Row type='flex' justify='space-evenly' style={{ width: '50vw' }}>
+      <Row type='flex' justify='space-around' style={{ width: '50vw' }}>
         <Col span={12} offset={8}>
           {!currentUser && <NavLink to="/signup" className="NavBtn">  Signup  </NavLink>}
 

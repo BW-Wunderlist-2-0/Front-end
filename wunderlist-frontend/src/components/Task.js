@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { List, Icon, Skeleton, Button, Checkbox } from 'antd';
 
-import { selectEditTask, cancelEditTask } from '../actions';
+
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
 
 const Task = props => {

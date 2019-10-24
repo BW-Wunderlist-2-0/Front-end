@@ -25,11 +25,14 @@ const Home = props => {
   const activeUser = useSelector(state => state.loginReducer.currentUser)
   const filterByTime = useSelector(state => state.uiReducer.filterByTime)
 
+  const [displayedTasks, setDisplayedTasks] = useState(tasks)
   const [showMenu, setShowMenu] = useState(false)
   const [addItemModal, setAddItemModal] = useState(false)
 
 
   const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime)
+
+  // apply view settings to local state
 
 
   const retrieveTasks = () => {
@@ -57,7 +60,7 @@ const Home = props => {
   }
 
   const switchChange = checked => {
-    dispatch({ type: `SET_VISIBILITY_FILTER`, })
+    dispatch({ type: `TOGGLE_COMPLETION_FILTER` })
   }
 
   const hideEdit = e => {

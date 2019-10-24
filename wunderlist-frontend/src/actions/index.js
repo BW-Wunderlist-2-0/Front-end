@@ -36,7 +36,7 @@ export const SUBMIT_EDIT_FAILURE = 'SUBMIT_EDIT_FAILURE';
 
 export const SEARCH = 'SEARCH';
 export const SET_TIMELINE_FILTER = 'SET_TIMELINE_FILTER';
-export const FILTER_BY_COMPLETION = 'FILTER_BY_COMPLETION';
+export const TOGGLE_COMPLETION_FILTER = 'TOGGLE_COMPLETION_FILTER';
 
 export const SET_TASK_COMPLETED = `SET_TASK_COMPLETED`;
 
@@ -95,8 +95,3 @@ export const search = value => dispatch => {
   dispatch({ type: SEARCH, value })
 }
 
-
-
-export const filterByCompletion = () => dispatch => {
-  dispatch({ type: FILTER_BY_COMPLETION })
-}
