@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Icon, DatePicker, Radio, Button } from 'antd'
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
 
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
 import { handleFormChange } from '../utilities/handleFormChange'
@@ -20,15 +21,24 @@ const initialState = {
 const AddTask = props => {
   const [formInput, setFormInput] = useState(initialState)
   const [addItemModal, setAddItemModal] = useState([props.addItemModal, props.setAddItemModal]);
-  // const { addItemModal, setAddItemModal } = props;
+
+  const dispatch = useDispatch();
+
+  const addTask = task => {
+    dispatch({ type: `ADD_TASK_START` })
+    axiosWithAuth()
+      .post('/tasks', task)
+      .then(res => {
+        console.log(`aWA in addTask action - task`, task, `res`, res)
+        dispatch({ type: `ADD_TASK_SUCCESS`, payload: res.data })
+      })
+      .catch(err => dispatch({ type: `ADD_TASK_FAILURE`, payload: err }))
+  }
 
   const handleSubmit = e => {
     e.preventDefault();
     console.log('Received values of AddTask Form: ', formInput);
-    axiosWithAuth()
-      .post('/tasks', formInput)
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
+    addTask(formInput);
 
     toggleDisplay(e, addItemModal, setAddItemModal)
     setFormInput(initialState)

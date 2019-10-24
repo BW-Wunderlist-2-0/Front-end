@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Icon, DatePicker, Radio, Button } from 'antd'
 import moment from 'moment';
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 
+
+import { axiosWithAuth } from '../utilities/axiosWithAuth';
 import { handleFormChange } from '../utilities/handleFormChange'
-import { cancelEditTask, submitEditTask } from '../actions'
+
+
 
 
 
@@ -12,18 +15,25 @@ import { cancelEditTask, submitEditTask } from '../actions'
 const EditTask = props => {
   const [formInput, setFormInput] = useState({})
 
+  const edit = useSelector(state => state.todoReducer.editing);
+  const task = useSelector(state => state.todoReducer.editing.task);
+  const tasks = useSelector(state => state.todoReducer.tasks)
+  const dispatch = useDispatch();
+
+
+  console.log(`EditTask`, task, tasks)
   useEffect(() => {
     console.log(`useEffect props`, props)
-    setFormInput(props.task)
+    setFormInput(task)
     console.log(`uE formInput`, formInput)
-  }, [props.task])
+  }, [])
 
 
   const handleSubmit = e => {
     e.preventDefault();
     console.log('Received values of EditTask Form: ', formInput);
     //signal edit submit action here
-    submitEditTask(formInput, props.tasks)
+    submitEditTask(formInput, tasks)
   };
 
   const handleDateChange = e => {
@@ -42,6 +52,25 @@ const EditTask = props => {
       ...formInput,
       recurringFrequency: e.target.value
     })
+  };
+
+  const cancelEditTask = task => {
+    dispatch({ type: `CANCEL_EDIT`, payload: { isEditing: false } })
+    console.log(`action cancelEditTask task`, task);
+  };
+
+  const submitEditTask = (task, tasks) => {
+    dispatch({ type: `SUBMIT_EDIT_START` })
+    // API cal to update
+    let newTaskList = tasks.filter(entry => entry.id !== task.id)
+    axiosWithAuth()
+      .put(`/tasks/${task.id}`, task)
+      .then(
+        dispatch({ type: `SUBMIT_EDIT_SUCCESS`, payload: { isEditing: false, newTaskList } })
+      )
+      .catch(err =>
+        dispatch({ type: `SUBMIT_EDIT_FAILURE`, payload: err })
+      )
   }
 
 
@@ -54,7 +83,7 @@ const EditTask = props => {
           <Input
             type='text'
             name='item'
-            value={props.task.item}
+            value={task.item}
             onChange={e => handleFormChange(e, formInput, setFormInput)}
           />
         </Form.Item>
@@ -63,7 +92,7 @@ const EditTask = props => {
         </Form.Item>
 
         <Form.Item>
-          <Radio.Group value={props.task.recurringFrequency} onChange={handleRadioChange}>
+          <Radio.Group value={task.recurringFrequency} onChange={handleRadioChange}>
             <Radio value='once'>Once</Radio>
             <Radio value='daily'>Daily</Radio>
             <Radio value='weekly'>Weekly</Radio>
@@ -78,13 +107,6 @@ const EditTask = props => {
   )
 }
 
-const mapStateToProps = state => {
-  console.log(`EditTask mSTP state`, state)
-  return {
-    edit: state.todoReducer.editing,
-    task: state.todoReducer.editing.task,
-    tasks: state.todoReducer.tasks
-  }
-}
 
-export default connect(mapStateToProps, { cancelEditTask, submitEditTask })(EditTask);
+
+export default EditTask

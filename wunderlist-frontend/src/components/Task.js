@@ -1,51 +1,80 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { List, Icon, Skeleton, Button } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { List, Icon, Skeleton, Button, Checkbox } from 'antd';
 
-import { selectEditTask, cancelEditTask } from '../actions'
+import { selectEditTask, cancelEditTask } from '../actions';
+import { axiosWithAuth } from '../utilities/axiosWithAuth';
 
 const Task = props => {
+  const { task } = props
+  const tasks = useSelector(state => state.todoReducer.tasks)
+  console.log(`task, task and tasks`, task, tasks)
 
-  // when clicked on expands to Modal? with more information
-  // try containing the Modal in this component
+  const dispatch = useDispatch();
 
+
+  const toggleCompleted = e => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    let newTaskList = tasks.map(entry => entry.id === task.id ? { ...entry, completed: !entry.completed } : entry)
+    console.log(`toggleCompleted in Task.js`, task, newTaskList)
+
+    axiosWithAuth()
+      .put(`/tasks/${task.id}`, task)
+      .then(res => {
+        console.log(`aWA in toggleCompleted`, res.data)
+        dispatch({ type: `SET_TASK_COMPLETE`, payload: newTaskList })
+      }
+
+      )
+      .catch(err =>
+        dispatch({ type: `SUBMIT_EDIT_FAILURE`, payload: err })
+      )
+  }
 
   const editTask = e => {
     e.preventDefault();
-    console.log(`props.task.id in editTask func in Task`, props.task.id)
-    console.log(`props.task in editTask func in Task`, props.task)
-    props.selectEditTask(props.task);
+    e.stopPropagation();
+    dispatch({ type: `START_EDIT`, payload: { isEditing: true, task } })
+    console.log(`task.id in editTask func in Task`, task.id)
+    console.log(`task in editTask func in Task`, task)
+
   }
 
   const clickDelete = (e) => {
     e.preventDefault();
-    console.log(`clickDelete activated on id`, props.task.id)
-    props.deleteTask(props.task, props.tasks)
+    console.log(`clickDelete activated on id`, task.id)
+    deleteTask(task, tasks)
   }
 
+  const deleteTask = (task, tasks) => {
+    dispatch({ type: `DELETE_TASK_START` })
+    let newTaskList = tasks.filter(entry => entry.id !== task.id)
+    axiosWithAuth()
+      .delete(`/tasks/${task.id}`)
+      .then(res => {
+        dispatch({ type: `DELETE_TASK_SUCCESS`, payload: newTaskList })
+        console.log(`aWA delete response`, res)
+      })
+      .catch(err => dispatch({ type: `DELETE_TASK_FAILURE`, payload: err }))
+  }
 
   return (
     <>
 
       <List.Item
-        actions={[<a onClick={editTask}>edit</a>, <Icon type="close" onClick={clickDelete} />]}>
+        actions={[<Button type='link' onClick={editTask}>Edit</Button>, <Icon type="close" onClick={clickDelete} />]}>
         <List.Item.Meta
-          title={props.task.item}
+          title={task.item}
         />
+        <Checkbox onChange={toggleCompleted}>Completed</Checkbox>
       </List.Item>
     </>
 
 
   )
 }
-const mapStateToProps = state => {
-  console.log(`Home.js mSTP state`, state, `tasks`, state.todoReducer.tasks)
-  return {
 
-    tasks: state.todoReducer.tasks,
-    edit: state.editReducer,
 
-  }
-}
-
-export default connect(mapStateToProps, { selectEditTask })(Task);
+export default Task;

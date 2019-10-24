@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Icon, Input, Button } from 'antd';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 
-import { login } from '../actions';
+import { axiosWithAuth } from '../utilities/axiosWithAuth';
+import { browserHistory } from '../'
 import { handleFormChange } from '../utilities/handleFormChange';
 
 
@@ -12,6 +14,9 @@ const Login = props => {
     username: '',
     password: ''
   })
+
+  const dispatch = useDispatch();
+  // const loginState = useSelector(state => state.loginReducer);
   // console.log(`props.form`, getFieldDecorator, getFieldsError, getFieldError, isFieldTouched)
   // const handleChange = e => {
 
@@ -29,16 +34,34 @@ const Login = props => {
   //   });
   // }
 
+  const login = credentials => {
+    dispatch({ type: `LOGIN_REQUEST` })
+    console.log(`action login called`)
+    axiosWithAuth()
+      .post('/auth/login', credentials)
+      .then(res => {
+        console.log(`res aWA in login`, res)
+        // localStorage.authToken = res.data.token
+        dispatch({ type: `LOGIN_SUCCESS`, user: jwtDecode(res.data.token) })
+        localStorage.setItem('token', res.data.token)
+        browserHistory.push('/home')
+      })
+      .catch(err => {
+        console.log(err)
+        dispatch({ type: `LOGIN_FAILURE`, errorMessage: err.toString() })
+      })
+  }
+
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.login(formInput)
+    login(formInput)
     // login({
     //   username: values.username,
     //   password: values.password
     // })
 
-    console.log('Received values of form: ', formInput);
+    console.log('Logging in with received values of form: ', formInput);
 
   };
 
@@ -76,15 +99,7 @@ const Login = props => {
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    loginReducer: state.loginReducer
-  }
-}
 
 
 
-
-export default connect(mapStateToProps, { login })(Login);
-
-// export default Login;
+export default Login;
