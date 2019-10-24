@@ -28,7 +28,7 @@ const Task = props => {
     <>
 
       <List.Item
-        actions={[<a onClick={editTask}>edit</a>, <Icon type="close" onClick={clickDelete} />]}>
+        actions={[<p onClick={editTask}>edit</p>, <Icon type="close" onClick={clickDelete} />]}>
         <List.Item.Meta
           title={props.task.item}
         />

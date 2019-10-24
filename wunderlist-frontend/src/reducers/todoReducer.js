@@ -20,6 +20,11 @@ const initialTodoState = {
     isDeleting: false,
     deleteErr: null,
     task: {}
+  },
+  ui: {
+    displayedTasks: [],
+    searchTerm: '',
+    filterByTime: 'daily'
   }
 };
 
@@ -113,6 +118,16 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
           deleteErr: action.payload
         }
       }
+    case actionType.SEARCH: {
+      return {
+        ...state,
+        ui: {
+          ...state.ui,
+          displayedTasks: state.tasks.filter(entry => entry.title.toLowerCase().includes(action.payload.toLowerCase())),
+          searchTerm: action.payload
+        }
+      }
+    }
     default:
       return state;
   }
