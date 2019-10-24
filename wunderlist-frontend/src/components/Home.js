@@ -13,7 +13,6 @@ import { toggleShowCompleted } from '../utilities/toggleShowCompleted';
 import AddTask from './AddTask';
 import Task from './Task';
 import EditTask from './EditTask';
-import Search from './Search';
 import FilterLink from './FilterLink';
 
 
@@ -38,11 +37,14 @@ const Home = props => {
 
 
   const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime);
+  console.log(`tasksFilteredByTimeline`, tasksFilteredByTimeline)
   const tasksFilteredByCompletion = toggleShowCompleted(tasksFilteredByTimeline);
+  console.log(`tasksFilteredByCompletion`, tasksFilteredByCompletion)
+  // setDisplayedTasks(tasksFilteredByCompletion)
   useEffect(() => {
     setDisplayedTasks(tasksFilteredByCompletion);
 
-  }, [])
+  }, [tasksFilteredByCompletion])
 
   const retrieveTasks = () => {
     dispatch({ type: 'GET_TASKS_START' })
