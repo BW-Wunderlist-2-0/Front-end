@@ -5,13 +5,6 @@ import * as actionType from '../actions';
 // import jwt_decode from 'jwt-decode'
 
 
-
-// const initialState = (token => ({
-//   isAuthenticating: false,
-//   currentUser: token ? jwt_decode(token) : null,
-//   errorMessage: null
-// }))(localStorage.authToken)
-
 const initialState = {
   isAuthenticating: false,
   currentUser: null,
@@ -47,7 +40,6 @@ const loginReducer = (state = initialState, action = {}) => {
         isAuthenticating: false,
         currentUser: null,
         errorMessage: null
-
       }
     default:
       return state;

@@ -5,8 +5,6 @@ import { useDispatch } from 'react-redux';
 
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
 import { handleFormChange } from '../utilities/handleFormChange'
-import { toggleDisplay } from '../utilities/toggleDisplay';
-// const { MonthPicker, RangePicker } = DatePicker;
 
 const initialState = {
   completed: false,
@@ -17,12 +15,16 @@ const initialState = {
 }
 
 
-
 const AddTask = props => {
   const [formInput, setFormInput] = useState(initialState)
-  const [addItemModal, setAddItemModal] = useState([props.addItemModal, props.setAddItemModal]);
-
   const dispatch = useDispatch();
+
+
+  const toggleDisplay = (e, message) => {
+    e.stopPropagation();
+    e.preventDefault();
+    dispatch({ type: `${message}` })
+  }
 
   const addTask = task => {
     dispatch({ type: `ADD_TASK_START` })
@@ -39,8 +41,7 @@ const AddTask = props => {
     e.preventDefault();
     console.log('Received values of AddTask Form: ', formInput);
     addTask(formInput);
-
-    toggleDisplay(e, addItemModal, setAddItemModal)
+    toggleDisplay(e, `TOGGLE_ADD_ITEM`)
     setFormInput(initialState)
   };
 

@@ -2,31 +2,41 @@ import * as actionType from '../actions';
 
 const initialState = {
   displayedTasks: [],
+  showCompleted: false,
   searchTerm: '',
-  filterByTime: ''
+  filterByTime: '',
+  showMenu: false,
+  addItemModal: false,
 }
 
-// const createFilteredArray = (item, arr) => {
-//   const lc = item.toLowerCase();
-//   const filteredArr = arr.filter(entry => entry.title.toLowerCase().includes(lc))
-//   return filteredArr
-// }
 
 const uiReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case actionType.SEARCH:
       return {
         ...state,
-        ui: {
-          ...state.ui,
-          displayedTasks: state.tasks.filter(entry => entry.title.toLowerCase().includes(action.payload.toLowerCase())),
-          searchTerm: action.payload
-        }
+        displayedTasks: state.tasks.filter(entry => entry.title.toLowerCase().includes(action.payload.toLowerCase())),
+        searchTerm: action.payload
       }
     case actionType.SET_TIMELINE_FILTER:
       return {
         ...state,
         filterByTime: action.filter
+      }
+    case actionType.TOGGLE_COMPLETION_FILTER:
+      return {
+        ...state,
+        showCompleted: !state.showCompleted
+      }
+    case actionType.TOGGLE_ADD_ITEM:
+      return {
+        ...state,
+        addItemModal: !state.addItemModal
+      }
+    case actionType.TOGGLE_MENU:
+      return {
+        ...state,
+        showMenu: !state.showMenu
       }
     default:
       return state;

@@ -6,31 +6,45 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
 import { deleteTask } from '../actions';
-import { toggleDisplay } from '../utilities/toggleDisplay';
+// import { toggleDisplay } from '../utilities/toggleDisplay';
+import { displayGivenTimeline } from '../utilities/displayGivenTimeline';
+import { toggleShowCompleted } from '../utilities/toggleShowCompleted';
+
 import AddTask from './AddTask';
 import Task from './Task';
 import EditTask from './EditTask';
-import Search from './Search';
 import FilterLink from './FilterLink';
-import { displayGivenTimeline } from '../utilities/displayGivenTimeline';
 
 
 
 const Home = props => {
 
   const dispatch = useDispatch();
-  const dataFetching = useSelector(state => state.todoReducer);
   const tasks = useSelector(state => state.todoReducer.tasks);
   const edit = useSelector(state => state.todoReducer.editing);
-  const activeUser = useSelector(state => state.loginReducer.currentUser)
-  const filterByTime = useSelector(state => state.uiReducer.filterByTime)
+  const uiFilters = useSelector(state => state.uiReducer)
 
-  const [showMenu, setShowMenu] = useState(false)
-  const [addItemModal, setAddItemModal] = useState(false)
+  const { filterByTime, showCompleted, showMenu, addItemModal } = uiFilters
+  const [displayedTasks, setDisplayedTasks] = useState(tasks)
 
 
-  const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime)
+  const toggleDisplay = (e, message) => {
+    e.stopPropagation();
+    e.preventDefault();
+    dispatch({ type: `${message}` })
+  }
 
+
+
+  const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime);
+  console.log(`tasksFilteredByTimeline`, tasksFilteredByTimeline)
+  const tasksFilteredByCompletion = toggleShowCompleted(tasksFilteredByTimeline);
+  console.log(`tasksFilteredByCompletion`, tasksFilteredByCompletion)
+  // setDisplayedTasks(tasksFilteredByCompletion)
+  useEffect(() => {
+    setDisplayedTasks(tasksFilteredByCompletion);
+
+  }, [tasksFilteredByCompletion])
 
   const retrieveTasks = () => {
     dispatch({ type: 'GET_TASKS_START' })
@@ -52,12 +66,8 @@ const Home = props => {
 
 
 
-  const toggleDrawer = () => {
-    setShowMenu(!showMenu)
-  }
-
-  const switchChange = checked => {
-    dispatch({ type: `SET_VISIBILITY_FILTER`, })
+  const switchChange = () => {
+    dispatch({ type: `TOGGLE_COMPLETION_FILTER` })
   }
 
   const hideEdit = e => {
@@ -67,17 +77,12 @@ const Home = props => {
 
   return (
     <div>
-      <h1>Home Component</h1>
-      <Button onClick={toggleDrawer}>Show Menu</Button>
-      <Button onClick={e => toggleDisplay(e, addItemModal, setAddItemModal)}>Add Task</Button>
-      {/* <Search /> */}
-
-
+      <h2>Tasks</h2>
       <Drawer
         title='View Options'
         placement='left'
         closable={true}
-        onClose={toggleDrawer}
+        onClose={e => toggleDisplay(e, `TOGGLE_MENU`)}
         visible={showMenu}>
 
 
@@ -94,9 +99,9 @@ const Home = props => {
         title='Add Task'
         visible={addItemModal}
         footer={false}
-        onCancel={e => toggleDisplay(e, addItemModal, setAddItemModal)}
+        onCancel={e => toggleDisplay(e, `TOGGLE_ADD_ITEM`)}
         addItemModal={addItemModal}
-        setAddItemModal={setAddItemModal}
+        setAddItemModal={addItemModal}
       >
         <AddTask />
       </Modal>
@@ -111,7 +116,7 @@ const Home = props => {
       </Modal>
       <div>
         <List itemLayout='horizontal'>
-          {tasks.map(item =>
+          {displayedTasks.map(item =>
             <Task key={item.id} task={item} deleteTask={deleteTask} tasks={tasks} />
           )}
         </List>

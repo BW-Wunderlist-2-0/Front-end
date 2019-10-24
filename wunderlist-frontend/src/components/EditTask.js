@@ -12,18 +12,17 @@ import { handleFormChange } from '../utilities/handleFormChange'
 
 
 
-const EditTask = props => {
-  const [formInput, setFormInput] = useState({})
-
-  const edit = useSelector(state => state.todoReducer.editing);
+const EditTask = () => {
   const task = useSelector(state => state.todoReducer.editing.task);
   const tasks = useSelector(state => state.todoReducer.tasks)
   const dispatch = useDispatch();
 
 
+  const [formInput, setFormInput] = useState(task)
+  // setFormInput(task)
   console.log(`EditTask`, task, tasks)
   useEffect(() => {
-    console.log(`useEffect props`, props)
+
     setFormInput(task)
     console.log(`uE formInput`, formInput)
   }, [])
@@ -31,13 +30,10 @@ const EditTask = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('Received values of EditTask Form: ', formInput);
-    //signal edit submit action here
     submitEditTask(formInput, tasks)
   };
 
   const handleDateChange = e => {
-    console.log(`handleDateChange e`, e, `e formatted with moment`, moment(e).format('MMMM Do YYYY, h:mm:ss a'))
     const formattedDate = moment(e).format('MM-DD-YYYY, h:mm:ss a');
     setFormInput(
       {
@@ -54,10 +50,7 @@ const EditTask = props => {
     })
   };
 
-  const cancelEditTask = task => {
-    dispatch({ type: `CANCEL_EDIT`, payload: { isEditing: false } })
-    console.log(`action cancelEditTask task`, task);
-  };
+
 
   const submitEditTask = (task, tasks) => {
     dispatch({ type: `SUBMIT_EDIT_START` })
@@ -83,7 +76,7 @@ const EditTask = props => {
           <Input
             type='text'
             name='item'
-            value={task.item}
+            value={formInput.item}
             onChange={e => handleFormChange(e, formInput, setFormInput)}
           />
         </Form.Item>
@@ -92,7 +85,7 @@ const EditTask = props => {
         </Form.Item>
 
         <Form.Item>
-          <Radio.Group value={task.recurringFrequency} onChange={handleRadioChange}>
+          <Radio.Group value={formInput.recurringFrequency} onChange={handleRadioChange}>
             <Radio value='once'>Once</Radio>
             <Radio value='daily'>Daily</Radio>
             <Radio value='weekly'>Weekly</Radio>
