@@ -20,11 +20,13 @@ const EditTask = props => {
   const tasks = useSelector(state => state.todoReducer.tasks)
   const dispatch = useDispatch();
 
+
+  console.log(`EditTask`, task, tasks)
   useEffect(() => {
     console.log(`useEffect props`, props)
     setFormInput(task)
     console.log(`uE formInput`, formInput)
-  }, [task])
+  }, [])
 
 
   const handleSubmit = e => {
@@ -50,12 +52,12 @@ const EditTask = props => {
       ...formInput,
       recurringFrequency: e.target.value
     })
-  }
+  };
 
   const cancelEditTask = task => {
     dispatch({ type: `CANCEL_EDIT`, payload: { isEditing: false } })
     console.log(`action cancelEditTask task`, task);
-  }
+  };
 
   const submitEditTask = (task, tasks) => {
     dispatch({ type: `SUBMIT_EDIT_START` })
@@ -69,41 +71,42 @@ const EditTask = props => {
       .catch(err =>
         dispatch({ type: `SUBMIT_EDIT_FAILURE`, payload: err })
       )
-
-
-    console.log(`editTask formInput`, formInput)
-
-    return (
-      <>
-        <Form onSubmit={handleSubmit}>
-          <Form.Item label='Task Name'>
-            <Input
-              type='text'
-              name='item'
-              value={task.item}
-              onChange={e => handleFormChange(e, formInput, setFormInput)}
-            />
-          </Form.Item>
-          <Form.Item label='Due Date'>
-            <DatePicker name='dateCreated' placeholder={moment(Date.now()).format('MM-DD-YYYY, h:mm a')} showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} />
-          </Form.Item>
-
-          <Form.Item>
-            <Radio.Group value={task.recurringFrequency} onChange={handleRadioChange}>
-              <Radio value='once'>Once</Radio>
-              <Radio value='daily'>Daily</Radio>
-              <Radio value='weekly'>Weekly</Radio>
-              <Radio value='monthly'>Monthly</Radio>
-            </Radio.Group >
-          </Form.Item>
-
-          <Button type="primary" htmlType="submit">Submit</Button>
-        </Form>
-
-      </>
-    )
   }
+
+
+  console.log(`editTask formInput`, formInput)
+
+  return (
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Form.Item label='Task Name'>
+          <Input
+            type='text'
+            name='item'
+            value={task.item}
+            onChange={e => handleFormChange(e, formInput, setFormInput)}
+          />
+        </Form.Item>
+        <Form.Item label='Due Date'>
+          <DatePicker name='dateCreated' placeholder={moment(Date.now()).format('MM-DD-YYYY, h:mm a')} showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} />
+        </Form.Item>
+
+        <Form.Item>
+          <Radio.Group value={task.recurringFrequency} onChange={handleRadioChange}>
+            <Radio value='once'>Once</Radio>
+            <Radio value='daily'>Daily</Radio>
+            <Radio value='weekly'>Weekly</Radio>
+            <Radio value='monthly'>Monthly</Radio>
+          </Radio.Group >
+        </Form.Item>
+
+        <Button type="primary" htmlType="submit">Submit</Button>
+      </Form>
+
+    </>
+  )
 }
+
 
 
 export default EditTask
