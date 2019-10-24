@@ -62,10 +62,10 @@ export const login = credentials => dispatch => {
     })
 }
 
-const logout = task => {
-  delete localStorage.authToken
-  return { type: LOGOUT, payload: { isEditing: false, task } }
-}
+// const logout = task => {
+//   delete localStorage.authToken
+//   return { type: LOGOUT, payload: { isEditing: false, task } }
+// } 
 
 
 
