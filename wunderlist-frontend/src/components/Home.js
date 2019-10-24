@@ -37,7 +37,10 @@ const Home = props => {
   const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime);
   const tasksFilteredByCompletion = toggleShowCompleted(tasksFilteredByTimeline);
   // apply view settings to local state
-  setDisplayedTasks(tasksFilteredByCompletion);
+  useEffect(() => {
+    setDisplayedTasks(tasksFilteredByCompletion);
+
+  }, [])
 
   const retrieveTasks = () => {
     dispatch({ type: 'GET_TASKS_START' })
