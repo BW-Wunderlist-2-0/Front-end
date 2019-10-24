@@ -1,10 +1,11 @@
 import * as actionType from '../actions';
 
 const initialState = {
-  displayedTasks: [],
   showCompleted: false,
   searchTerm: '',
-  filterByTime: ''
+  filterByTime: '',
+  showMenu: false,
+  showAddTask: false
 }
 
 // const createFilteredArray = (item, arr) => {

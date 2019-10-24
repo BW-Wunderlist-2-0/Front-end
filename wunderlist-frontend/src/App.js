@@ -31,9 +31,11 @@ function App(props) {
 
         </PageHeader>
         <Content >
-          {isAuthenticating && <Spin tip='Logging In...' />}
-          {errorMessage && <span>{errorMessage}</span>}
           <Row type='flex' justify='center'>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              {isAuthenticating && <Spin tip='Logging In...' />}
+              {errorMessage && <span>{errorMessage}</span>}
+            </div>
             <Col xs={20} sm={18} md={16} lg={14} xl={12} style={{ margin: '1rem', padding: '1rem', }}>
               <Switch>
                 <Route path='/signup' component={WrappedOnboardingForm} />

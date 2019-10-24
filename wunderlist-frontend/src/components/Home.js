@@ -80,7 +80,7 @@ const Home = props => {
       <h1>Home Component</h1>
       <Button onClick={toggleDrawer}>Show Menu</Button>
       <Button onClick={e => toggleDisplay(e, addItemModal, setAddItemModal)}>Add Task</Button>
-      {/* <Search /> */}
+      <Search />
 
 
       <Drawer

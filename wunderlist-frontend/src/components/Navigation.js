@@ -5,9 +5,25 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { browserHistory } from '../';
 
+import Search from './Search';
+
+
+// Line 38:31:  'toggleDrawer' is not defined     no-undef
+// Line 39:35:  'toggleDisplay' is not defined    no-undef
+// Line 39:52:  'addItemModal' is not defined     no-undef
+// Line 39:66:  'setAddItemModal' is not defined  no-undef
+// Line 40:14:  'Search' is not defined           react/jsx-no-undef
+
 const Navigation = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.loginReducer.currentUser)
+
+
+  // AddItem state
+  // Drawer state
+
+
+
 
   const logout = e => {
     console.log(`logout clicked`)
@@ -27,9 +43,14 @@ const Navigation = () => {
         <Col>
           {!currentUser && <NavLink to="/login" className="NavBtn">  Login  </NavLink>}
         </Col>
-        <Col>
-          {currentUser && <Button type='link' onClick={logout} className='NavBtn'>Logout</Button>}
+        {/* {currentUser &&
+          <Col>
+            (<Button onClick={toggleDrawer}>Show Menu</Button>
+            <Button onClick={e => toggleDisplay(e, addItemModal, setAddItemModal)}>Add Task</Button>
+            <Search />
+            <Button type='link' onClick={logout} className='NavBtn'>Logout</Button>)
         </Col>
+        } */}
         {/* <NavLink to="/login" className="NavBtn">  Logout  </NavLink> */}
       </Row>
     </div>

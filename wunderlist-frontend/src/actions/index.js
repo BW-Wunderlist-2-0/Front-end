@@ -72,10 +72,10 @@ export const login = credentials => dispatch => {
 
 
 // Edit Task Actions
-export const selectEditTask = task => dispatch => {
-  dispatch({ type: START_EDIT, payload: { isEditing: true, task } })
-  console.log(`action selectEditTask task`, task);
-}
+// export const selectEditTask = task => dispatch => {
+//   dispatch({ type: START_EDIT, payload: { isEditing: true, task } })
+//   console.log(`action selectEditTask task`, task);
+// }
 
 
 
