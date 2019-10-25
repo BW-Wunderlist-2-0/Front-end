@@ -44,7 +44,7 @@ const Home = props => {
   useEffect(() => {
     setDisplayedTasks(tasksFilteredByCompletion);
 
-  }, [tasksFilteredByCompletion])
+  }, [displayedTasks])
 
   const retrieveTasks = () => {
     dispatch({ type: 'GET_TASKS_START' })
