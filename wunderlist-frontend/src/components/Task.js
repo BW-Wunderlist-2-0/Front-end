@@ -16,18 +16,16 @@ const Task = props => {
   const toggleCompleted = e => {
     e.preventDefault();
     e.stopPropagation();
-
+    task.completed = !task.completed
     let newTaskList = tasks.map(entry => entry.id === task.id ? { ...entry, completed: !entry.completed } : entry)
     console.log(`toggleCompleted in Task.js`, task, newTaskList)
-
+    console.log(task)
     axiosWithAuth()
-      .put(`/tasks/${task.id}`, task)
+      .put(`/todos/${task.id}`, task)
       .then(res => {
         console.log(`aWA in toggleCompleted`, res.data)
         dispatch({ type: `SET_TASK_COMPLETE`, payload: newTaskList })
-      }
-
-      )
+      })
       .catch(err =>
         dispatch({ type: `SUBMIT_EDIT_FAILURE`, payload: err })
       )
@@ -51,8 +49,9 @@ const Task = props => {
   const deleteTask = (task, tasks) => {
     dispatch({ type: `DELETE_TASK_START` })
     let newTaskList = tasks.filter(entry => entry.id !== task.id)
+    console.log(`newTaskList in deleteTask`, newTaskList)
     axiosWithAuth()
-      .delete(`/tasks/${task.id}`)
+      .delete(`/todos/${task.id}`)
       .then(res => {
         dispatch({ type: `DELETE_TASK_SUCCESS`, payload: newTaskList })
         console.log(`aWA delete response`, res)

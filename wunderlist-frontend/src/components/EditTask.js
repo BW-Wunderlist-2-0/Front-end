@@ -57,9 +57,9 @@ const EditTask = () => {
     // API cal to update
     let newTaskList = tasks.filter(entry => entry.id !== task.id)
     axiosWithAuth()
-      .put(`/tasks/${task.id}`, task)
+      .put(`/todos/${task.id}`, task)
       .then(
-        dispatch({ type: `SUBMIT_EDIT_SUCCESS`, payload: { isEditing: false, newTaskList } })
+        dispatch({ type: `SUBMIT_EDIT_SUCCESS`, payload: newTaskList })
       )
       .catch(err =>
         dispatch({ type: `SUBMIT_EDIT_FAILURE`, payload: err })

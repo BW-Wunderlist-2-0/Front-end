@@ -26,7 +26,7 @@ const Home = props => {
   const uiFilters = useSelector(state => state.uiReducer)
 
   const { filterByTime, showCompleted, showMenu, addItemModal, searchTerm } = uiFilters
-  const [displayedTasks, setDisplayedTasks] = useState(tasks)
+  // const [displayedTasks, setDisplayedTasks] = useState(tasks)
 
 
 
@@ -38,60 +38,59 @@ const Home = props => {
 
 
 
-  const applySearch = (tasks, term) => {
-    let termLC
-    if (searchTerm) {
-      termLC = searchTerm.toLowerCase();
-    } else termLC = '';
-    return displayedTasks.filter(entry => entry.title.toLowerCase().includes(termLC));
-  }
+  // const applySearch = (tasks, term) => {
+  //   let termLC
+  //   if (searchTerm) {
+  //     termLC = searchTerm.toLowerCase();
+  //   } else termLC = '';
+  //   return displayedTasks.filter(entry => entry.title.toLowerCase().includes(termLC));
+  // }
 
-  const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime);
-  // console.log(`tasksFilteredByTimeline`, tasksFilteredByTimeline)
-  const tasksFilteredByCompletion = toggleShowCompleted(tasksFilteredByTimeline);
-  // console.log(`tasksFilteredByCompletion`, tasksFilteredByCompletion)
-  const tasksFilteredBySearch = applySearch(tasksFilteredByCompletion, searchTerm);
+  // const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime);
 
+  // // console.log(`tasksFilteredByTimeline`, tasksFilteredByTimeline)
 
-
-  // setDisplayedTasks(tasksFilteredByCompletion)
-
-  // useEffect(() => {
-  //   setDisplayedTasks(tasksFilteredByTimeline);
-  //   setDisplayedTasks(tasksFilteredByCompletion);
-  //   setDisplayedTasks(applySearch())
-  // }, [displayedTasks, searchTerm])
-
-  // useEffect(() => {
-
-  // }, [displayedTasks])
-
-  // useEffect(() => {
-  //   let termLC = searchTerm.toLowerCase();
-  //   setDisplayedTasks(displayedTasks.filter(entry => entry.description.toLowerCase().includes(termLC)));
-  // }, [displayedTasks])
+  // // const tasksFilteredByCompletion = toggleShowCompleted(tasksFilteredByTimeline);
+  // const tasksFilteredByCompletion = toggleShowCompleted(tasks, uiFilters.showCompleted);
+  // // console.log(`tasksFilteredByCompletion`, tasksFilteredByCompletion)
 
 
-  const retrieveTasks = () => {
+  // const tasksFilteredBySearch = applySearch(tasksFilteredByCompletion, searchTerm);
+
+
+
+  // const retrieveTasks = () => {
+  //   dispatch({ type: 'GET_TASKS_START' })
+  //   axiosWithAuth()
+  //     .get('/todos')
+  //     .then(res => {
+  //       let userTasks = res.data.filter(entry => entry.user_id === userID)
+  //       console.log(`userTasks -- filtered by user id in retrieveTasks`, userTasks)
+  //       dispatch({ type: 'GET_TASKS_SUCCESS', payload: userTasks })
+  //       console.log(`aWA in retrieveTasks res.data`, res.data)
+  //     })
+  //     .catch(err => {
+  //       console.log(`retrieveTasks err`, err)
+  //       dispatch({ type: 'GET_TASKS_FAILURE', payload: err })
+  //     })
+  // }
+
+
+
+  useEffect(() => {
     dispatch({ type: 'GET_TASKS_START' })
     axiosWithAuth()
       .get('/todos')
       .then(res => {
         let userTasks = res.data.filter(entry => entry.user_id === userID)
-        console.log(`userTasks -- filtered by user id in retrieveTasks`, userTasks)
         dispatch({ type: 'GET_TASKS_SUCCESS', payload: userTasks })
+        console.log(`userTasks -- filtered by user id in retrieveTasks`, userTasks)
         console.log(`aWA in retrieveTasks res.data`, res.data)
       })
       .catch(err => {
-        console.log(`retrieveTasks err`, err)
         dispatch({ type: 'GET_TASKS_FAILURE', payload: err })
+        console.log(`retrieveTasks err`, err)
       })
-  }
-
-
-
-  useEffect(() => {
-    retrieveTasks()
     console.log(`useEffect tasks`, tasks)
   }, []);
 
@@ -147,7 +146,7 @@ const Home = props => {
       </Modal>
       <div>
         <List itemLayout='horizontal'>
-          {tasksFilteredBySearch.map(item =>
+          {tasks.map(item =>
             <Task key={item.id} task={item} deleteTask={deleteTask} tasks={tasks} />
           )}
         </List>

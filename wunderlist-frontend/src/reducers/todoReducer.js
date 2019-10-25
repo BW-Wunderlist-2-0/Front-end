@@ -95,6 +95,7 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
     case actionType.DELETE_TASK_START:
       return {
         ...state,
+        tasks: action.payload,
         deleting: {
           ...state.deleting,
           isDeleting: true,
@@ -103,7 +104,7 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
     case actionType.DELETE_TASK_SUCCESS:
       return {
         ...state,
-        tasks: action.payload.newTaskList,
+        tasks: action.payload,
         deleting: {
           ...state.deleting,
           isDeleting: false,
