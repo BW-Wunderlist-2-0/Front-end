@@ -18,12 +18,12 @@ const Task = props => {
     e.stopPropagation();
     task.completed = !task.completed
     let newTaskList = tasks.map(entry => entry.id === task.id ? { ...entry, completed: !entry.completed } : entry)
-    console.log(`toggleCompleted in Task.js`, task, newTaskList)
-    console.log(task)
+    // console.log(`toggleCompleted in Task.js`, task, newTaskList)
+    // console.log(task)
     axiosWithAuth()
       .put(`/todos/${task.id}`, task)
       .then(res => {
-        console.log(`aWA in toggleCompleted`, res.data)
+        // console.log(`aWA in toggleCompleted`, res.data)
         dispatch({ type: `SET_TASK_COMPLETE`, payload: newTaskList })
       })
       .catch(err =>

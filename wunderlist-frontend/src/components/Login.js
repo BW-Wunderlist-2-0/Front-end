@@ -8,7 +8,7 @@ import { handleFormChange } from '../utilities/handleFormChange';
 
 
 const Login = props => {
-  console.log(`props in Login.js`, props)
+  // console.log(`props in Login.js`, props)
   const [formInput, setFormInput] = useState({
     username: '',
     password: ''
@@ -19,11 +19,11 @@ const Login = props => {
 
   const login = credentials => {
     dispatch({ type: `LOGIN_REQUEST` })
-    console.log(`action login called`)
+    // console.log(`action login called`)
     axiosWithAuth()
       .post('/auth/login', credentials)
       .then(res => {
-        console.log(`res aWA in login`, res.data.userID)
+        // console.log(`res aWA in login`, res.data.userID)
         // localStorage.authToken = res.data.token
         dispatch({ type: `LOGIN_SUCCESS`, payload: res.data })
         localStorage.setItem('token', res.data.token)
@@ -39,7 +39,7 @@ const Login = props => {
   const handleSubmit = e => {
     e.preventDefault();
     login(formInput)
-    console.log('Logging in with received values of form: ', formInput);
+    // console.log('Logging in with received values of form: ', formInput);
   };
 
   return (

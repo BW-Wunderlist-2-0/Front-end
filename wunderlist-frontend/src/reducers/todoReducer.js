@@ -65,8 +65,25 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
         ...state,
         isLoading: false,
         error: action.payload
-      }
-
+      };
+    case actionType.START_EDIT:
+      return {
+        ...state,
+        isEditing: {
+          ...state.isEditing,
+          isEditing: true,
+          task: action.payload.task
+        }
+      };
+    case actionType.CANCEL_EDIT:
+      return {
+        ...state,
+        isEditing: {
+          ...state.isEditing,
+          isEditing: false,
+          task: initialTodoState.isEditing.task
+        }
+      };
     case actionType.SUBMIT_EDIT_START:
       return {
         ...state,
@@ -83,7 +100,7 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
           isEditing: false,
         },
         tasks: action.payload.newTaskList
-      }
+      };
     case actionType.SUBMIT_EDIT_FAILURE:
       return {
         ...state,
@@ -91,16 +108,15 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
           ...state.editing,
           isEditing: false,
         }
-      }
+      };
     case actionType.DELETE_TASK_START:
       return {
         ...state,
-        tasks: action.payload,
         deleting: {
           ...state.deleting,
           isDeleting: true,
         }
-      }
+      };
     case actionType.DELETE_TASK_SUCCESS:
       return {
         ...state,
@@ -109,7 +125,7 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
           ...state.deleting,
           isDeleting: false,
         }
-      }
+      };
     case actionType.DELETE_TASK_FAILURE:
       return {
         ...state,
@@ -118,7 +134,7 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
           isDeleting: false,
           deleteErr: action.payload
         }
-      }
+      };
     case actionType.SET_TASK_COMPLETED:
       return {
         ...state,
@@ -128,7 +144,7 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
     default:
       return state;
   }
-}
+};
 
 
 

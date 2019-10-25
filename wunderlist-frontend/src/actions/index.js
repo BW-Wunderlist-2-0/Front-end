@@ -28,8 +28,12 @@ export const DELETE_TASK_FAILURE = "DELETE_TASK_FAILURE";
 
 // Task Adding
 export const TOGGLE_ADD_ITEM = 'TOGGLE_ADD_ITEM';
-// Task Editing
+// Menu
 export const TOGGLE_MENU = 'TOGGLE_MENU';
+
+// Task Editing
+export const START_EDIT = 'START_EDIT'
+export const CANCEL_EDIT = 'CANCEL_EDIT'
 
 export const SUBMIT_EDIT_START = 'SUBMIT_EDIT_START';
 export const SUBMIT_EDIT_SUCCESS = 'SUBMIT_EDIT_SUCCESS'
