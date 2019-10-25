@@ -24,7 +24,7 @@ const Home = props => {
   const edit = useSelector(state => state.todoReducer.editing);
   const uiFilters = useSelector(state => state.uiReducer)
 
-  const { filterByTime, showCompleted, showMenu, addItemModal } = uiFilters
+  const { filterByTime, showCompleted, showMenu, addItemModal, searchTerm } = uiFilters
   const [displayedTasks, setDisplayedTasks] = useState(tasks)
 
 
@@ -36,15 +36,39 @@ const Home = props => {
 
 
 
-  const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime);
-  console.log(`tasksFilteredByTimeline`, tasksFilteredByTimeline)
-  const tasksFilteredByCompletion = toggleShowCompleted(tasksFilteredByTimeline);
-  console.log(`tasksFilteredByCompletion`, tasksFilteredByCompletion)
-  // setDisplayedTasks(tasksFilteredByCompletion)
-  useEffect(() => {
-    setDisplayedTasks(tasksFilteredByCompletion);
+  const applySearch = (tasks, term) => {
+    let termLC
+    if (searchTerm) {
+      termLC = searchTerm.toLowerCase();
+    } else termLC = '';
+    return displayedTasks.filter(entry => entry.description.toLowerCase().includes(termLC));
+  }
 
-  }, [displayedTasks])
+  const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime);
+  // console.log(`tasksFilteredByTimeline`, tasksFilteredByTimeline)
+  const tasksFilteredByCompletion = toggleShowCompleted(tasksFilteredByTimeline);
+  // console.log(`tasksFilteredByCompletion`, tasksFilteredByCompletion)
+  const tasksFilteredBySearch = applySearch(tasksFilteredByCompletion, searchTerm);
+
+
+
+  // setDisplayedTasks(tasksFilteredByCompletion)
+
+  // useEffect(() => {
+  //   setDisplayedTasks(tasksFilteredByTimeline);
+  //   setDisplayedTasks(tasksFilteredByCompletion);
+  //   setDisplayedTasks(applySearch())
+  // }, [displayedTasks, searchTerm])
+
+  // useEffect(() => {
+
+  // }, [displayedTasks])
+
+  // useEffect(() => {
+  //   let termLC = searchTerm.toLowerCase();
+  //   setDisplayedTasks(displayedTasks.filter(entry => entry.description.toLowerCase().includes(termLC)));
+  // }, [displayedTasks])
+
 
   const retrieveTasks = () => {
     dispatch({ type: 'GET_TASKS_START' })
@@ -116,7 +140,7 @@ const Home = props => {
       </Modal>
       <div>
         <List itemLayout='horizontal'>
-          {displayedTasks.map(item =>
+          {tasksFilteredBySearch.map(item =>
             <Task key={item.id} task={item} deleteTask={deleteTask} tasks={tasks} />
           )}
         </List>

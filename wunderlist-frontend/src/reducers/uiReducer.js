@@ -15,7 +15,6 @@ const uiReducer = (state = initialState, action = {}) => {
     case actionType.SEARCH:
       return {
         ...state,
-        displayedTasks: state.tasks.filter(entry => entry.title.toLowerCase().includes(action.payload.toLowerCase())),
         searchTerm: action.payload
       }
     case actionType.SET_TIMELINE_FILTER:
