@@ -73,7 +73,7 @@ const Home = props => {
   const retrieveTasks = () => {
     dispatch({ type: 'GET_TASKS_START' })
     axiosWithAuth()
-      .get('/tasks')
+      .get('/todos')
       .then(res => {
         dispatch({ type: 'GET_TASKS_SUCCESS', payload: res.data })
         console.log(`aWA in retrieveTasks res.data`, res.data)

@@ -45,23 +45,23 @@ export const SET_TASK_COMPLETED = `SET_TASK_COMPLETED`;
 /*actions*/
 
 /// USER AUTh Tasks
-export const login = credentials => dispatch => {
-  dispatch({ type: LOGIN_REQUEST })
-  console.log(`action login called`)
-  axiosWithAuth()
-    .post('/auth/login', credentials)
-    .then(res => {
-      console.log(`res aWA in login`, res)
-      // localStorage.authToken = res.data.token
-      dispatch({ type: LOGIN_SUCCESS, user: jwtDecode(res.data.token) })
-      localStorage.setItem('token', res.data.token)
-      browserHistory.push('/home')
-    })
-    .catch(err => {
-      console.log(err)
-      dispatch({ type: LOGIN_FAILURE, errorMessage: err.toString() })
-    })
-}
+// export const login = credentials => dispatch => {
+//   dispatch({ type: LOGIN_REQUEST })
+//   console.log(`action login called`)
+//   axiosWithAuth()
+//     .post('/auth/login', credentials)
+//     .then(res => {
+//       console.log(`res aWA in login`, res)
+//       // localStorage.authToken = res.data.token
+//       dispatch({ type: LOGIN_SUCCESS, user: jwtDecode(res.data.token) })
+//       localStorage.setItem('token', res.data.token)
+//       browserHistory.push('/home')
+//     })
+//     .catch(err => {
+//       console.log(err)
+//       dispatch({ type: LOGIN_FAILURE, errorMessage: err.toString() })
+//     })
+// }
 
 // const logout = task => {
 //   delete localStorage.authToken
@@ -84,7 +84,7 @@ export const deleteTask = (task, tasks) => dispatch => {
   dispatch({ type: DELETE_TASK_START })
   let newTaskList = tasks.filter(entry => entry.id !== task.id)
   axiosWithAuth()
-    .delete(`/tasks/${task.id}`)
+    .delete(`/todos/${task.id}`)
     .then(res => {
       dispatch({ type: DELETE_TASK_SUCCESS, payload: newTaskList })
       console.log(`aWA delete response`, res)

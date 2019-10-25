@@ -9,11 +9,14 @@ const initialTodoState = {
     editSubmitErr: null,
     task: {
       completed: false,
-      item: '',
+      title: '',
+      task: '',
+      user_id: '',
       dateCreated: null,
-      dateDue: null,
-      recurring: false,
-      recurringFrequency: ''
+      setDate: null,
+      // notes: '',
+      // recurring: false,
+      // recurringFrequency: ''
     }
   },
   deleting: {

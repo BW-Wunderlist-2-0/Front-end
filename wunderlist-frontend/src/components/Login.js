@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Icon, Input, Button } from 'antd';
 import { useDispatch } from 'react-redux';
-import jwtDecode from 'jwt-decode';
 
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
 import { browserHistory } from '../'
@@ -24,9 +23,9 @@ const Login = props => {
     axiosWithAuth()
       .post('/auth/login', credentials)
       .then(res => {
-        console.log(`res aWA in login`, res)
+        console.log(`res aWA in login`, res.data.userID)
         // localStorage.authToken = res.data.token
-        dispatch({ type: `LOGIN_SUCCESS`, user: jwtDecode(res.data.token) })
+        dispatch({ type: `LOGIN_SUCCESS`, payload: res.data })
         localStorage.setItem('token', res.data.token)
         browserHistory.push('/home')
       })

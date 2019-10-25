@@ -8,7 +8,9 @@ import { handleFormChange } from '../utilities/handleFormChange';
 const UserOnboarding = props => {
   const [formInput, setFormInput] = useState({
     username: '',
-    password: ''
+    password: '',
+    firstName: '',
+    lastName: ''
   })
 
 
@@ -34,6 +36,22 @@ const UserOnboarding = props => {
           <Input
             prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
             placeholder="Username" name='username' value={formInput.username} onChange={(e) => handleFormChange(e, formInput, setFormInput)}
+          />
+
+        </Form.Item>
+        <Form.Item >
+
+          <Input
+            prefix={<p> </p>}
+            placeholder="First Name" name='firstName' value={formInput.firstName} onChange={(e) => handleFormChange(e, formInput, setFormInput)}
+          />
+
+        </Form.Item>
+        <Form.Item >
+
+          <Input
+            prefix={<p> </p>}
+            placeholder="Last Name" name='lastName' value={formInput.lastName} onChange={(e) => handleFormChange(e, formInput, setFormInput)}
           />
 
         </Form.Item>

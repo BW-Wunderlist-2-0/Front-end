@@ -7,7 +7,7 @@ import * as actionType from '../actions';
 
 const initialState = {
   isAuthenticating: false,
-  currentUser: null,
+  userID: null,
   errorMessage: null
 }
 
@@ -30,7 +30,7 @@ const loginReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isAuthenticating: false,
-        currentUser: action.user,
+        userID: action.payload.userID,
         errorMessage: null
 
       }
@@ -38,7 +38,7 @@ const loginReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isAuthenticating: false,
-        currentUser: null,
+        userID: null,
         errorMessage: null
       }
     default:
