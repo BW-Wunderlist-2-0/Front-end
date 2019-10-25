@@ -19,12 +19,11 @@ const EditTask = () => {
 
 
   const [formInput, setFormInput] = useState(task)
-  // setFormInput(task)
-  console.log(`EditTask`, task, tasks)
+
   useEffect(() => {
 
     setFormInput(task)
-    console.log(`uE formInput`, formInput)
+
   }, [])
 
 
@@ -43,12 +42,6 @@ const EditTask = () => {
     )
   }
 
-  const handleRadioChange = e => {
-    setFormInput({
-      ...formInput,
-      recurringFrequency: e.target.value
-    })
-  };
 
 
 
@@ -60,7 +53,7 @@ const EditTask = () => {
     axiosWithAuth()
       .put(`/todos/${task.id}`, formInput)
       .then(res => {
-        console.log(res)
+        // console.log(res)
         dispatch({ type: `SUBMIT_EDIT_SUCCESS`, payload: [...newTaskList, res.data] })
       }
       )
@@ -70,7 +63,7 @@ const EditTask = () => {
   }
 
 
-  console.log(`editTask formInput`, formInput)
+
 
   return (
     <>
@@ -94,15 +87,7 @@ const EditTask = () => {
         <Form.Item label='Due Date'>
           <DatePicker name='dateCreated' showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} placeholder={moment(Date.now()).format('MM-DD-YYYY, h:mm a')} />
         </Form.Item>
-        {/* 
-        <Form.Item>
-          <Radio.Group value={formInput.recurringFrequency} onChange={handleRadioChange}>
-            <Radio value='Once'>Once</Radio>
-            <Radio value='Daily'>Daily</Radio>
-            <Radio value='Weekly'>Weekly</Radio>
-            <Radio value='Monthly'>Monthly</Radio>
-          </Radio.Group >
-        </Form.Item> */}
+
 
         <Button type="primary" htmlType="submit">Submit</Button>
       </Form>

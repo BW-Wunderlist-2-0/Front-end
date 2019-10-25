@@ -8,7 +8,7 @@ import { axiosWithAuth } from '../utilities/axiosWithAuth';
 const Task = props => {
   const { task } = props
   const tasks = useSelector(state => state.todoReducer.tasks)
-  console.log(`task, task and tasks`, task, tasks)
+  // console.log(`task, task and tasks`, task, tasks)
 
   const dispatch = useDispatch();
 
@@ -35,26 +35,26 @@ const Task = props => {
     e.preventDefault();
     e.stopPropagation();
     dispatch({ type: `START_EDIT`, payload: { isEditing: true, task } })
-    console.log(`task.id in editTask func in Task`, task.id)
-    console.log(`task in editTask func in Task`, task)
+    // console.log(`task.id in editTask func in Task`, task.id)
+    // console.log(`task in editTask func in Task`, task)
 
   }
 
   const clickDelete = (e) => {
     e.preventDefault();
-    console.log(`clickDelete activated on id`, task.id)
+    // console.log(`clickDelete activated on id`, task.id)
     deleteTask(task, tasks)
   }
 
   const deleteTask = (task, tasks) => {
     dispatch({ type: `DELETE_TASK_START` })
     let newTaskList = tasks.filter(entry => entry.id !== task.id)
-    console.log(`newTaskList in deleteTask`, newTaskList)
+    // console.log(`newTaskList in deleteTask`, newTaskList)
     axiosWithAuth()
       .delete(`/todos/${task.id}`)
       .then(res => {
         dispatch({ type: `DELETE_TASK_SUCCESS`, payload: newTaskList })
-        console.log(`aWA delete response`, res)
+        // console.log(`aWA delete response`, res)
       })
       .catch(err => dispatch({ type: `DELETE_TASK_FAILURE`, payload: err }))
   }

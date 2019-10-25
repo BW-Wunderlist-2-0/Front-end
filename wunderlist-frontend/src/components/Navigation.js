@@ -8,20 +8,14 @@ import { browserHistory } from '../';
 import Search from './Search';
 
 
-// Line 38:31:  'toggleDrawer' is not defined     no-undef
-// Line 39:35:  'toggleDisplay' is not defined    no-undef
-// Line 39:52:  'addItemModal' is not defined     no-undef
-// Line 39:66:  'setAddItemModal' is not defined  no-undef
-// Line 40:14:  'Search' is not defined           react/jsx-no-undef
+
 
 const Navigation = () => {
   const dispatch = useDispatch();
   const userID = useSelector(state => state.loginReducer.userID)
   const uiFilters = useSelector(state => state.uiReducer)
 
-  console.log(`Navigation userID`, userID)
-  // AddItem state
-  // Drawer state
+
 
 
   const toggleDisplay = (e, message) => {
@@ -31,7 +25,7 @@ const Navigation = () => {
   }
 
   const logout = e => {
-    console.log(`logout clicked`)
+
     e.preventDefault();
     delete localStorage.token
     dispatch({ type: `LOGOUT` })
@@ -61,7 +55,7 @@ const Navigation = () => {
           </Col>
         </Row>
       }
-      {/* <NavLink to="/login" className="NavBtn">  Logout  </NavLink> */}
+
 
     </div >
   );

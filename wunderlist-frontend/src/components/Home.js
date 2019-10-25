@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Drawer, Button, Icon, List, Modal, Switch } from 'antd';
+import React, { useEffect } from 'react';
+import { Drawer, List, Modal, Switch } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
 // import { connect } from 'react-redux';
@@ -7,8 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
 import { deleteTask } from '../actions';
 // import { toggleDisplay } from '../utilities/toggleDisplay';
-import { displayGivenTimeline } from '../utilities/displayGivenTimeline';
-import { toggleShowCompleted } from '../utilities/toggleShowCompleted';
+// import { displayGivenTimeline } from '../utilities/displayGivenTimeline';
+// import { toggleShowCompleted } from '../utilities/toggleShowCompleted';
 
 import AddTask from './AddTask';
 import Task from './Task';
@@ -26,7 +26,6 @@ const Home = props => {
   const uiFilters = useSelector(state => state.uiReducer)
 
   const { filterByTime, showCompleted, showMenu, addItemModal, searchTerm } = uiFilters
-  // const [displayedTasks, setDisplayedTasks] = useState(tasks)
 
 
 
@@ -59,23 +58,6 @@ const Home = props => {
 
 
 
-  // const retrieveTasks = () => {
-  //   dispatch({ type: 'GET_TASKS_START' })
-  //   axiosWithAuth()
-  //     .get('/todos')
-  //     .then(res => {
-  //       let userTasks = res.data.filter(entry => entry.user_id === userID)
-  //       console.log(`userTasks -- filtered by user id in retrieveTasks`, userTasks)
-  //       dispatch({ type: 'GET_TASKS_SUCCESS', payload: userTasks })
-  //       console.log(`aWA in retrieveTasks res.data`, res.data)
-  //     })
-  //     .catch(err => {
-  //       console.log(`retrieveTasks err`, err)
-  //       dispatch({ type: 'GET_TASKS_FAILURE', payload: err })
-  //     })
-  // }
-
-
 
   useEffect(() => {
     dispatch({ type: 'GET_TASKS_START' })
@@ -84,14 +66,12 @@ const Home = props => {
       .then(res => {
         let userTasks = res.data.filter(entry => entry.user_id === userID)
         dispatch({ type: 'GET_TASKS_SUCCESS', payload: userTasks })
-        console.log(`userTasks -- filtered by user id in retrieveTasks`, userTasks)
-        console.log(`aWA in retrieveTasks res.data`, res.data)
+
       })
       .catch(err => {
         dispatch({ type: 'GET_TASKS_FAILURE', payload: err })
-        console.log(`retrieveTasks err`, err)
+
       })
-    console.log(`useEffect tasks`, tasks)
   }, []);
 
 

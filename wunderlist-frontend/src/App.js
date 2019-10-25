@@ -13,11 +13,11 @@ import WrappedOnboardingForm from './components/UserOnboarding';
 
 
 
-function App(props) {
+function App() {
   const login = useSelector(state => state.loginReducer)
   const { Footer, Content } = Layout;
 
-  const { isAuthenticating, currentUser, errorMessage } = login
+  const { isAuthenticating, errorMessage } = login
 
 
   return (
@@ -39,7 +39,7 @@ function App(props) {
               </Col>
             </div>
           </Row>
-          {/* <Col xs={20} sm={18} md={16} lg={14} xl={12} style={{ margin: '1rem', padding: '1rem', }}> */}
+
           <div style={{
             margin: 'auto', maxWidth: '75%'
           }}>
@@ -51,7 +51,7 @@ function App(props) {
               <Route exact path='/login' component={Login} />
             </Switch>
           </div>
-          {/* </Col> */}
+
         </Content>
         <Footer style={{ textAlign: 'center' }}>Wunderlist 2019</Footer>
       </Layout >

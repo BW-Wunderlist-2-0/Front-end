@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Icon, DatePicker, Radio, Button } from 'antd'
+import { Form, Input, DatePicker, Button } from 'antd'
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -67,13 +67,7 @@ const AddTask = props => {
     )
   }
 
-  // const handleRadioChange = e => {
-  //   setFormInput({
-  //     ...formInput,
-  //     recurringFrequency: e.target.value,
-  //     user_id: userID
-  //   })
-  // }
+
 
 
 

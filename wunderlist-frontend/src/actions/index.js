@@ -1,6 +1,4 @@
-import jwtDecode from 'jwt-decode';
 
-import { browserHistory } from '../'
 import { axiosWithAuth } from '../utilities/axiosWithAuth';
 
 
@@ -44,44 +42,6 @@ export const SET_TIMELINE_FILTER = 'SET_TIMELINE_FILTER';
 export const TOGGLE_COMPLETION_FILTER = 'TOGGLE_COMPLETION_FILTER';
 
 export const SET_TASK_COMPLETED = `SET_TASK_COMPLETED`;
-
-
-/*actions*/
-
-/// USER AUTh Tasks
-// export const login = credentials => dispatch => {
-//   dispatch({ type: LOGIN_REQUEST })
-//   console.log(`action login called`)
-//   axiosWithAuth()
-//     .post('/auth/login', credentials)
-//     .then(res => {
-//       console.log(`res aWA in login`, res)
-//       // localStorage.authToken = res.data.token
-//       dispatch({ type: LOGIN_SUCCESS, user: jwtDecode(res.data.token) })
-//       localStorage.setItem('token', res.data.token)
-//       browserHistory.push('/home')
-//     })
-//     .catch(err => {
-//       console.log(err)
-//       dispatch({ type: LOGIN_FAILURE, errorMessage: err.toString() })
-//     })
-// }
-
-// const logout = task => {
-//   delete localStorage.authToken
-//   return { type: LOGOUT, payload: { isEditing: false, task } }
-// } 
-
-
-
-
-
-// Edit Task Actions
-// export const selectEditTask = task => dispatch => {
-//   dispatch({ type: START_EDIT, payload: { isEditing: true, task } })
-//   console.log(`action selectEditTask task`, task);
-// }
-
 
 
 export const deleteTask = (task, tasks) => dispatch => {
