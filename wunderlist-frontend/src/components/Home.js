@@ -20,12 +20,14 @@ import FilterLink from './FilterLink';
 const Home = props => {
 
   const dispatch = useDispatch();
+  const userID = useSelector(state => state.loginReducer.userID)
   const tasks = useSelector(state => state.todoReducer.tasks);
   const edit = useSelector(state => state.todoReducer.editing);
   const uiFilters = useSelector(state => state.uiReducer)
 
   const { filterByTime, showCompleted, showMenu, addItemModal, searchTerm } = uiFilters
   const [displayedTasks, setDisplayedTasks] = useState(tasks)
+
 
 
   const toggleDisplay = (e, message) => {
@@ -41,7 +43,7 @@ const Home = props => {
     if (searchTerm) {
       termLC = searchTerm.toLowerCase();
     } else termLC = '';
-    return displayedTasks.filter(entry => entry.description.toLowerCase().includes(termLC));
+    return displayedTasks.filter(entry => entry.title.toLowerCase().includes(termLC));
   }
 
   const tasksFilteredByTimeline = displayGivenTimeline(tasks, filterByTime);
@@ -75,10 +77,15 @@ const Home = props => {
     axiosWithAuth()
       .get('/todos')
       .then(res => {
-        dispatch({ type: 'GET_TASKS_SUCCESS', payload: res.data })
+        let userTasks = res.data.filter(entry => entry.user_id === userID)
+        console.log(`userTasks -- filtered by user id in retrieveTasks`, userTasks)
+        dispatch({ type: 'GET_TASKS_SUCCESS', payload: userTasks })
         console.log(`aWA in retrieveTasks res.data`, res.data)
       })
-      .catch(err => dispatch({ type: 'GET_TASKS_FAILURE', payload: err }))
+      .catch(err => {
+        console.log(`retrieveTasks err`, err)
+        dispatch({ type: 'GET_TASKS_FAILURE', payload: err })
+      })
   }
 
 

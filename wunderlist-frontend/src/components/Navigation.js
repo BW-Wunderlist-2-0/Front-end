@@ -16,10 +16,10 @@ import Search from './Search';
 
 const Navigation = () => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.loginReducer.currentUser)
+  const userID = useSelector(state => state.loginReducer.userID)
   const uiFilters = useSelector(state => state.uiReducer)
 
-
+  console.log(`Navigation userID`, userID)
   // AddItem state
   // Drawer state
 
@@ -40,7 +40,7 @@ const Navigation = () => {
 
   return (
     <div >
-      {!currentUser &&
+      {!userID &&
         <Row type='flex' justify='space-around' style={{ width: '80vw' }}>
           <Col span={12} offset={8}>
             <NavLink to="/signup" className="NavBtn">  Signup  </NavLink>
@@ -50,7 +50,7 @@ const Navigation = () => {
           </Col>
         </Row>
       }
-      {currentUser &&
+      {userID &&
         <Row style={{ width: '80vw' }}>
 
           <Col >

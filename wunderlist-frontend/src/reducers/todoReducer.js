@@ -49,6 +49,23 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
         isLoading: false,
         error: action.payload
       };
+    case actionType.ADD_TASK_START:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case actionType.ADD_TASK_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        tasks: [...state.tasks, action.payload]
+      };
+    case actionType.ADD_TASK_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      }
 
     case actionType.SUBMIT_EDIT_START:
       return {
@@ -57,7 +74,7 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
           ...state.editing,
           isEditing: true,
         }
-      }
+      };
     case actionType.SUBMIT_EDIT_SUCCESS:
       return {
         ...state,

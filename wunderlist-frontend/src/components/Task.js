@@ -66,7 +66,8 @@ const Task = props => {
       <List.Item
         actions={[<Button type='link' onClick={editTask}>Edit</Button>, <Icon type="close" onClick={clickDelete} />]}>
         <List.Item.Meta
-          title={task.item}
+          title={task.title}
+          description={task.task}
         />
         <Checkbox onChange={toggleCompleted}>Completed</Checkbox>
       </List.Item>
