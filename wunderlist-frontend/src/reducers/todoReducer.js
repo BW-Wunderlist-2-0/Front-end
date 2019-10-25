@@ -69,8 +69,8 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
     case actionType.START_EDIT:
       return {
         ...state,
-        isEditing: {
-          ...state.isEditing,
+        editing: {
+          ...state.editing,
           isEditing: true,
           task: action.payload.task
         }
@@ -78,8 +78,8 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
     case actionType.CANCEL_EDIT:
       return {
         ...state,
-        isEditing: {
-          ...state.isEditing,
+        editing: {
+          ...state.editing,
           isEditing: false,
           task: initialTodoState.isEditing.task
         }
@@ -99,7 +99,7 @@ export const todoReducer = (state = initialTodoState, action = {}) => {
           ...state.editing,
           isEditing: false,
         },
-        tasks: action.payload.newTaskList
+        tasks: action.payload
       };
     case actionType.SUBMIT_EDIT_FAILURE:
       return {

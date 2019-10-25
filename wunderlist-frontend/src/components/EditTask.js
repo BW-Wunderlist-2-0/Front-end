@@ -56,10 +56,13 @@ const EditTask = () => {
     dispatch({ type: `SUBMIT_EDIT_START` })
     // API cal to update
     let newTaskList = tasks.filter(entry => entry.id !== task.id)
+
     axiosWithAuth()
-      .put(`/todos/${task.id}`, task)
-      .then(
-        dispatch({ type: `SUBMIT_EDIT_SUCCESS`, payload: newTaskList })
+      .put(`/todos/${task.id}`, formInput)
+      .then(res => {
+        console.log(res)
+        dispatch({ type: `SUBMIT_EDIT_SUCCESS`, payload: [...newTaskList, res.data] })
+      }
       )
       .catch(err =>
         dispatch({ type: `SUBMIT_EDIT_FAILURE`, payload: err })
@@ -72,26 +75,34 @@ const EditTask = () => {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Form.Item label='Task Name'>
+        <Form.Item label='Task Title'>
           <Input
             type='text'
-            name='item'
-            value={formInput.item}
+            name='title'
+            value={formInput.title}
+            onChange={e => handleFormChange(e, formInput, setFormInput)}
+          />
+        </Form.Item>
+        <Form.Item label='Task'>
+          <Input
+            type='text'
+            name='task'
+            value={formInput.task}
             onChange={e => handleFormChange(e, formInput, setFormInput)}
           />
         </Form.Item>
         <Form.Item label='Due Date'>
-          <DatePicker name='dateCreated' placeholder={moment(Date.now()).format('MM-DD-YYYY, h:mm a')} showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} />
+          <DatePicker name='dateCreated' showTime format='YYYY-MM-DD HH:mm:ss' onChange={handleDateChange} placeholder={moment(Date.now()).format('MM-DD-YYYY, h:mm a')} />
         </Form.Item>
-
+        {/* 
         <Form.Item>
           <Radio.Group value={formInput.recurringFrequency} onChange={handleRadioChange}>
-            <Radio value='once'>Once</Radio>
-            <Radio value='daily'>Daily</Radio>
-            <Radio value='weekly'>Weekly</Radio>
-            <Radio value='monthly'>Monthly</Radio>
+            <Radio value='Once'>Once</Radio>
+            <Radio value='Daily'>Daily</Radio>
+            <Radio value='Weekly'>Weekly</Radio>
+            <Radio value='Monthly'>Monthly</Radio>
           </Radio.Group >
-        </Form.Item>
+        </Form.Item> */}
 
         <Button type="primary" htmlType="submit">Submit</Button>
       </Form>
